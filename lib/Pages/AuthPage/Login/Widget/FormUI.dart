@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Level3Form extends StatelessWidget {
@@ -118,7 +119,7 @@ class FieldWidget extends StatelessWidget {
             left: 35.0,
             right: 35,
           ),
-          child: TextField(
+          child: TextFormField(
             obscureText: isObscure,
             controller: controller,
             style: GoogleFonts.dmSans(

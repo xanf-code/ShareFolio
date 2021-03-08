@@ -4,6 +4,8 @@ import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:my_app/main.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
+
+  String _error;
 
   @override
   Widget build(BuildContext context) {
@@ -103,18 +107,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
     try {
       final auth = Provider.of(context).auth;
       if (_passwordController.text == _confirmPasswordController.text) {
-        String uid = await auth.createUserWithEmailAndPassword(
-            _emailController.text.trim(),
-            _passwordController.text.trim(),
-            _fullNameController.text);
-        print("Signed In $uid");
+        await auth.createUserWithEmailAndPassword(_emailController.text.trim(),
+            _passwordController.text.trim(), _fullNameController.text);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => HomeController()),
             (route) => false);
+      } else if (_passwordController.text != _confirmPasswordController.text) {
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(
+            message: "Passwords should match",
+          ),
+        );
       }
     } catch (e) {
-      print(e);
+      setState(() {
+        _error = e.message;
+        print(_error);
+      });
+      if (_error != null) {
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(
+            message: _error,
+          ),
+        );
+      }
     }
   }
 }

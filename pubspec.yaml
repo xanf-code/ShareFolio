@@ -38,6 +38,7 @@ dependencies:
   lint: ^1.5.3
   form_field_validator: ^1.0.1
   uuid: ^3.0.1
+  top_snackbar_flutter: ^0.0.3
 
 dev_dependencies:
   flutter_test:

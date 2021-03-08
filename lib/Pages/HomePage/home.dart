@@ -28,12 +28,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void signOut() async {
-    final auth = Provider.of(context).auth;
-
-    await auth.signOut();
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeController()),
-        (route) => false);
+    try {
+      final auth = Provider.of(context).auth;
+      await auth.signOut();
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeController()),
+          (route) => false);
+    } catch (e) {
+      print(e);
+    }
   }
 }

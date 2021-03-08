@@ -4,6 +4,8 @@ import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:my_app/main.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  String _error;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +101,18 @@ class _LoginFormState extends State<LoginForm> {
           MaterialPageRoute(builder: (context) => HomeController()),
           (route) => false);
     } catch (e) {
-      print(e);
+      setState(() {
+        _error = e.message;
+        print(_error);
+      });
+      if (_error != null) {
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(
+            message: _error,
+          ),
+        );
+      }
     }
   }
 }
