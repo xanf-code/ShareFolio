@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
+import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:my_app/main.dart';
@@ -27,8 +29,11 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Level1Form(
-                type: "Log In",
+              Padding(
+                padding: const EdgeInsets.only(left: 35),
+                child: Level1Form(
+                  type: "Log In",
+                ),
               ), // Heading
               Level2Form(
                 type: "Log in with one of the following options.",
@@ -54,8 +59,33 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _passwordController,
                 isObscure: true,
               ),
+              GestureDetector(
+                onTap: () {
+                  HapticFeedback.mediumImpact();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PassReset(),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 35.0, top: 12),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Forgot Password?",
+                      style: GoogleFonts.dmSans(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
-                height: 20,
+                height: 18,
               ),
               GestureDetector(
                 onTap: () {

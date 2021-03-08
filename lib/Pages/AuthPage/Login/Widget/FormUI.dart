@@ -68,15 +68,12 @@ class Level1Form extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 35.0),
-      child: Text(
-        type,
-        style: GoogleFonts.dmSans(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 36,
-        ),
+    return Text(
+      type,
+      style: GoogleFonts.dmSans(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 36,
       ),
     );
   }

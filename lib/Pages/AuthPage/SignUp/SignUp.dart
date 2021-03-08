@@ -30,8 +30,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Level1Form(
-                type: "Sign up",
+              Padding(
+                padding: const EdgeInsets.only(left: 35),
+                child: Level1Form(
+                  type: "Sign up",
+                ),
               ), // Heading
               Level2Form(
                 type: "Sign up with one of the following options.",
