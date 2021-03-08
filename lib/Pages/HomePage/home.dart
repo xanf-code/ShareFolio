@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/Widget/auth.dart';
+import 'package:my_app/main.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);
@@ -17,10 +19,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: MaterialButton(
           onPressed: () async {
             HapticFeedback.mediumImpact();
+            signOut();
           },
           child: Text("Sign Out"),
         ),
       ),
     );
+  }
+
+  void signOut() async {
+    final auth = Provider.of(context).auth;
+
+    await auth.signOut();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeController()),
+        (route) => false);
   }
 }

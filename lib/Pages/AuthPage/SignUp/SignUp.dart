@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
+import 'package:my_app/Widget/auth.dart';
+import 'package:my_app/main.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -69,6 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
+                  signUp();
                 },
                 child: ButtonContainer(
                   type: "Sign up",
@@ -94,5 +97,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void signUp() async {
+    try {
+      final auth = Provider.of(context).auth;
+      if (_passwordController.text == _confirmPasswordController.text) {
+        String uid = await auth.createUserWithEmailAndPassword(
+            _emailController.text.trim(),
+            _passwordController.text.trim(),
+            _fullNameController.text);
+        print("Signed In $uid");
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeController()),
+            (route) => false);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

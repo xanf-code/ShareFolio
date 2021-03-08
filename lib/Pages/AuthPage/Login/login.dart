@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
+import 'package:my_app/Widget/auth.dart';
+import 'package:my_app/main.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -55,6 +57,7 @@ class _LoginFormState extends State<LoginForm> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
+                  signIn();
                 },
                 child: ButtonContainer(
                   type: "Log in",
@@ -80,5 +83,22 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  void signIn() async {
+    try {
+      final auth = Provider.of(context).auth;
+      String uid = await auth.signInWithEmailAndPassword(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
+      print("Signed In $uid");
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeController()),
+          (route) => false);
+    } catch (e) {
+      print(e);
+    }
   }
 }
