@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
-import 'package:my_app/Widget/auth.dart';
+import 'package:my_app/Pages/Wrapper/wrapper.dart';
+import 'package:my_app/Services/auth_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-import '../../../main.dart';
 
 class PassReset extends StatefulWidget {
   @override
@@ -87,10 +86,7 @@ class _PassResetState extends State<PassReset> {
   String _error;
   void resetPass() async {
     try {
-      final auth = Provider.of(context).auth;
-      await auth.sendPasswordResetEmail(
-        _resetPass.text.trim(),
-      );
+      await AuthService().sendPasswordResetEmail(_resetPass.text.trim());
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -100,7 +96,7 @@ class _PassResetState extends State<PassReset> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeController(),
+            builder: (context) => Wrapper(),
           ),
           (route) => false);
     } catch (e) {

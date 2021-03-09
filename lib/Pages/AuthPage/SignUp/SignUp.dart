@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
-import 'package:my_app/Services/firebase_services/services.dart';
-import 'package:my_app/Widget/auth.dart';
-import 'package:my_app/main.dart';
+import 'package:my_app/Services/auth_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -18,7 +16,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-
   String _error;
 
   @override
@@ -109,14 +106,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void signUp() async {
     try {
-      final auth = Provider.of(context).auth;
       if (_passwordController.text == _confirmPasswordController.text) {
-        await auth.createUserWithEmailAndPassword(_emailController.text.trim(),
-            _passwordController.text.trim(), _fullNameController.text);
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomeController()),
-            (route) => false);
+        await AuthService()
+            .signUp(_emailController.text, _passwordController.text, context);
       } else if (_passwordController.text != _confirmPasswordController.text) {
         showTopSnackBar(
           context,

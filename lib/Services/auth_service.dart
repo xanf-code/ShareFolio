@@ -1,71 +1,115 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_app/Models/userDB.dart';
+import 'package:my_app/Pages/Wrapper/wrapper.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  //final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  // Checking app state (User logged in or logged Out?)
-  Stream<String> get onAuthStateChange =>
-      _firebaseAuth.authStateChanges().map((User user) => user?.uid);
-
-  // GET UID
-  String getCurrentUserUID() {
-    return _firebaseAuth.currentUser.uid;
+  UserModel _userFromFirebaseUser(User user) {
+    return user != null ? UserModel(id: user.uid) : null;
   }
 
-  // GET CURRENT EMAIL
-  Future getCurrentUserEmail() async {
-    return _firebaseAuth.currentUser.email;
+  Stream<UserModel> get user {
+    return auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  // GET CURRENT NAME
-  Future getCurrentUserName() async {
-    return _firebaseAuth.currentUser.displayName;
+  Future signUp(email, password, context) async {
+    try {
+      UserCredential user = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.user.uid)
+          .set({'name': email, 'email': email});
+      _userFromFirebaseUser(user.user);
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Wrapper(),
+          ),
+          (route) => false);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(
+            message: e.message,
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(
+            message: e.message,
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
-  // Email and Pass Sign up
-  Future<String> createUserWithEmailAndPassword(
-      String email, String password, String name) async {
-    final currentUser = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+  Future signIn(email, password, context) async {
+    try {
+      User user = (await auth.signInWithEmailAndPassword(
+          email: email, password: password)) as User;
 
-    User firebaseUser = currentUser.user;
-    await firebaseUser.updateProfile(displayName: name);
-    await firebaseUser.reload();
+      _userFromFirebaseUser(user);
 
-    return firebaseUser.uid;
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Wrapper(),
+          ),
+          (route) => false);
+    } on FirebaseAuthException catch (e) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: e.message,
+        ),
+      );
+    } catch (e) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: e.message,
+        ),
+      );
+    }
   }
 
-  // Email Sign-In
-  Future<String> signInWithEmailAndPassword(
-      String email, String password) async {
-    return (await _firebaseAuth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    ))
-        .user
-        .uid;
+  Future signOut() async {
+    try {
+      return await auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   // Reset Password
   Future sendPasswordResetEmail(String email) async {
-    return _firebaseAuth.sendPasswordResetEmail(email: email);
+    return auth.sendPasswordResetEmail(email: email);
   }
 
-  // Sign-Out
-  signOut() {
-    return _firebaseAuth.signOut();
-  }
-
-  // Google Sign-In
-  Future<String> signInWithGoogle() async {
-    final GoogleSignInAccount account = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication _googleAuth = await account.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      idToken: _googleAuth.idToken,
-      accessToken: _googleAuth.accessToken,
-    );
-    return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
-  }
+  // -------------------------------------OLD-----------------------------------------
+  // Google Sign-In (Removed temporarily)
+  // Future<String> signInWithGoogle() async {
+  //   final GoogleSignInAccount account = await _googleSignIn.signIn();
+  //   final GoogleSignInAuthentication _googleAuth = await account.authentication;
+  //   final AuthCredential credential = GoogleAuthProvider.credential(
+  //     idToken: _googleAuth.idToken,
+  //     accessToken: _googleAuth.accessToken,
+  //   );
+  //   return (await auth.signInWithCredential(credential)).user.uid;
+  // }
 }

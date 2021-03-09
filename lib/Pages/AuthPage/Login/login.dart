@@ -4,9 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
-import 'package:my_app/Services/firebase_services/services.dart';
-import 'package:my_app/Widget/auth.dart';
-import 'package:my_app/main.dart';
+import 'package:my_app/Pages/Wrapper/wrapper.dart';
+import 'package:my_app/Services/auth_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -42,7 +41,6 @@ class _LoginFormState extends State<LoginForm> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  googleSignIn();
                 },
                 child: Level3Form(),
               ),
@@ -122,47 +120,11 @@ class _LoginFormState extends State<LoginForm> {
 
   void signIn() async {
     try {
-      final auth = Provider.of(context).auth;
-      String uid = await auth.signInWithEmailAndPassword(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
-      );
-      print("Signed In $uid");
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeController(),
-          ),
-          (route) => false);
+      await AuthService()
+          .signIn(_emailController.text, _passwordController.text, context);
     } catch (e) {
       setState(() {
         _error = e.message;
-        print(_error);
-      });
-      if (_error != null) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(
-            message: _error,
-          ),
-        );
-      }
-    }
-  }
-
-  void googleSignIn() async {
-    try {
-      final auth = Provider.of(context).auth;
-      await auth.signInWithGoogle();
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeController()),
-          (route) => false);
-    } catch (e) {
-      setState(() {
-        _error = e.message;
-        print(_error);
       });
       if (_error != null) {
         showTopSnackBar(
