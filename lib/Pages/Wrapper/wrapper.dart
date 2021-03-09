@@ -15,6 +15,7 @@ class Wrapper extends StatelessWidget {
       return LoginForm();
     }
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }

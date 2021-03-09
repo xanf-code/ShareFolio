@@ -12,14 +12,14 @@ class AuthService {
   //final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   UserModel _userFromFirebaseUser(User user) {
-    return user != null ? UserModel(id: user.uid) : null;
+    return user != null ? UserModel(uid: user.uid) : null;
   }
 
   Stream<UserModel> get user {
     return auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  Future signUp(email, password, context) async {
+  Future signUp(email, password, context, name) async {
     try {
       UserCredential user = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -27,7 +27,13 @@ class AuthService {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.user.uid)
-          .set({'name': email, 'email': email});
+          .set({
+        'name': name,
+        'profileImageUrl': ' ',
+        'email': email,
+        'uid': user.user.uid,
+        'accCreated': Timestamp.now(),
+      });
       _userFromFirebaseUser(user.user);
 
       Navigator.pushAndRemoveUntil(

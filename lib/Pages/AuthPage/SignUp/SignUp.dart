@@ -107,8 +107,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void signUp() async {
     try {
       if (_passwordController.text == _confirmPasswordController.text) {
-        await AuthService()
-            .signUp(_emailController.text, _passwordController.text, context);
+        await AuthService().signUp(_emailController.text,
+            _passwordController.text, context, _fullNameController.text);
       } else if (_passwordController.text != _confirmPasswordController.text) {
         showTopSnackBar(
           context,

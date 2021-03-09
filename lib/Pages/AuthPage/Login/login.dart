@@ -41,6 +41,12 @@ class _LoginFormState extends State<LoginForm> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.info(
+                      message: "Feature will be added soon",
+                    ),
+                  );
                 },
                 child: Level3Form(),
               ),
