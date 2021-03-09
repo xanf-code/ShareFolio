@@ -14,16 +14,6 @@ class AuthService {
     return _firebaseAuth.currentUser.uid;
   }
 
-  // GET CURRENT EMAIL
-  Future getCurrentUserEmail() async {
-    return _firebaseAuth.currentUser.email;
-  }
-
-  // GET CURRENT NAME
-  Future getCurrentUserName() async {
-    return _firebaseAuth.currentUser.displayName;
-  }
-
   // Email and Pass Sign up
   Future<String> createUserWithEmailAndPassword(
       String email, String password, String name) async {
