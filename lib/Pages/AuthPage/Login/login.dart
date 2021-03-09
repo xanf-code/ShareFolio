@@ -133,9 +133,7 @@ class _LoginFormState extends State<LoginForm> {
           MaterialPageRoute(
             builder: (context) => HomeController(),
           ),
-          (route) => false).whenComplete(() {
-        FirebaseService().getUserData(context);
-      });
+          (route) => false);
     } catch (e) {
       setState(() {
         _error = e.message;
