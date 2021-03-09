@@ -9,7 +9,7 @@ class UserService {
             email: snapshot.data()['email'] ?? '',
             name: snapshot.data()['name'] ?? '',
             profileImageUrl: snapshot.data()['profileImageUrl'] ?? '',
-            uid: snapshot.id,
+            uid: snapshot.data()["uid"],
           )
         : null;
   }

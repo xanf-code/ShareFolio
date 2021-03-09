@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
-import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
 import 'package:my_app/Pages/HomePage/home.dart';
 import 'package:provider/provider.dart';
 
