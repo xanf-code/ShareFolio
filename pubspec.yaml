@@ -39,6 +39,12 @@ dependencies:
   form_field_validator: ^1.0.1
   uuid: ^3.0.1
   top_snackbar_flutter: ^0.0.3
+  cached_network_image: ^2.5.1
+  avatar_glow:
+  flutter_feather_icons: ^1.0.3
+  floating_navbar:
+    git:
+      url: https://github.com/xanf-code/floating_navbar.git
 
 dev_dependencies:
   flutter_test:

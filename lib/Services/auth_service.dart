@@ -6,6 +6,7 @@ import 'package:my_app/Widget/auth.dart';
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   // Checking app state (User logged in or logged Out?)
   Stream<String> get onAuthStateChange =>
       _firebaseAuth.authStateChanges().map((User user) => user?.uid);
@@ -13,6 +14,21 @@ class AuthService {
   // GET UID
   String getCurrentUserUID() {
     return _firebaseAuth.currentUser.uid;
+  }
+
+  // GET EMAIL
+  String getCurrentUserEmail() {
+    return _firebaseAuth.currentUser.email;
+  }
+
+  // GET NAME
+  String getCurrentUserName() {
+    return _firebaseAuth.currentUser.displayName;
+  }
+
+  // GET PIC
+  String getCurrentUserPic() {
+    return _firebaseAuth.currentUser.photoURL;
   }
 
   // Email and Pass Sign up
@@ -56,18 +72,12 @@ class AuthService {
   Future<String> signInWithGoogle(context) async {
     final GoogleSignInAccount account = await _googleSignIn.signIn();
     final GoogleSignInAuthentication _googleAuth = await account.authentication;
-    final GoogleSignInAccount gCurrentUser = _googleSignIn.currentUser;
+    //final GoogleSignInAccount gCurrentUser = _googleSignIn.currentUser;
     final AuthCredential credential = GoogleAuthProvider.credential(
       idToken: _googleAuth.idToken,
       accessToken: _googleAuth.accessToken,
     );
-    FirebaseService().createUserDatabase(
-        context,
-        gCurrentUser.displayName,
-        gCurrentUser.email,
-        gCurrentUser.id,
-        gCurrentUser.photoUrl,
-        gCurrentUser.id);
+
     return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
   }
 }

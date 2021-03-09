@@ -6,12 +6,12 @@ class UserModel {
   String uid;
   String profileImage;
 
-  UserModel(
+  UserModel({
     this.name,
     this.email,
     this.uid,
     this.profileImage,
-  );
+  });
 
   Map<String, dynamic> toJson() => {
         'name': name,
