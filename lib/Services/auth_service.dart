@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_app/Services/firebase_services/services.dart';
+import 'package:my_app/Widget/auth.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   // Checking app state (User logged in or logged Out?)
   Stream<String> get onAuthStateChange =>
       _firebaseAuth.authStateChanges().map((User user) => user?.uid);
@@ -16,12 +17,15 @@ class AuthService {
 
   // Email and Pass Sign up
   Future<String> createUserWithEmailAndPassword(
-      String email, String password, String name) async {
+      String email, String password, String name, context) async {
     final currentUser = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
 
     User firebaseUser = currentUser.user;
     await firebaseUser.updateProfile(displayName: name);
+
+    FirebaseService().createUserDatabase(context, name, email, firebaseUser.uid,
+        firebaseUser.photoURL, Provider.of(context).auth.getCurrentUserUID());
     await firebaseUser.reload();
 
     return firebaseUser.uid;
@@ -49,13 +53,21 @@ class AuthService {
   }
 
   // Google Sign-In
-  Future<String> signInWithGoogle() async {
+  Future<String> signInWithGoogle(context) async {
     final GoogleSignInAccount account = await _googleSignIn.signIn();
     final GoogleSignInAuthentication _googleAuth = await account.authentication;
+    final GoogleSignInAccount gCurrentUser = _googleSignIn.currentUser;
     final AuthCredential credential = GoogleAuthProvider.credential(
       idToken: _googleAuth.idToken,
       accessToken: _googleAuth.accessToken,
     );
+    FirebaseService().createUserDatabase(
+        context,
+        gCurrentUser.displayName,
+        gCurrentUser.email,
+        gCurrentUser.id,
+        gCurrentUser.photoUrl,
+        gCurrentUser.id);
     return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
   }
 }

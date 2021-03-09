@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
-import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:my_app/main.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -112,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final auth = Provider.of(context).auth;
       if (_passwordController.text == _confirmPasswordController.text) {
         await auth.createUserWithEmailAndPassword(_emailController.text.trim(),
-            _passwordController.text.trim(), _fullNameController.text);
+            _passwordController.text.trim(), _fullNameController.text, context);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => HomeController()),

@@ -153,7 +153,7 @@ class _LoginFormState extends State<LoginForm> {
   void googleSignIn() async {
     try {
       final auth = Provider.of(context).auth;
-      await auth.signInWithGoogle();
+      await auth.signInWithGoogle(context);
 
       Navigator.pushAndRemoveUntil(
           context,
