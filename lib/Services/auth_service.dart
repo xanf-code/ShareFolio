@@ -1,11 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Checking app state (User logged in or logged Out?)
   Stream<String> get onAuthStateChange =>
       _firebaseAuth.authStateChanges().map((User user) => user?.uid);
+
+  // GET UID
+  String getCurrentUserUID() {
+    return _firebaseAuth.currentUser.uid;
+  }
+
+  // GET CURRENT EMAIL
+  Future getCurrentUserEmail() async {
+    return _firebaseAuth.currentUser.email;
+  }
+
+  // GET CURRENT NAME
+  Future getCurrentUserName() async {
+    return _firebaseAuth.currentUser.displayName;
+  }
 
   // Email and Pass Sign up
   Future<String> createUserWithEmailAndPassword(
@@ -39,5 +56,16 @@ class AuthService {
   // Sign-Out
   signOut() {
     return _firebaseAuth.signOut();
+  }
+
+  // Google Sign-In
+  Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount account = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication _googleAuth = await account.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      idToken: _googleAuth.idToken,
+      accessToken: _googleAuth.accessToken,
+    );
+    return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
   }
 }

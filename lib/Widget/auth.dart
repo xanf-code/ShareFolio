@@ -3,8 +3,10 @@ import 'package:my_app/Services/auth_service.dart';
 
 class Provider extends InheritedWidget {
   final AuthService auth;
+  final db;
 
-  Provider({Key key, Widget child, this.auth}) : super(key: key, child: child);
+  Provider({Key key, Widget child, this.auth, this.db})
+      : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
