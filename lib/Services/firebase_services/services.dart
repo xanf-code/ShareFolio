@@ -18,11 +18,13 @@ class FirebaseService {
 
   // user data from snapshots
   UserModel _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    return UserModel(
-        uid: uid,
-        name: snapshot.data()['name'],
-        email: snapshot.data()["email"],
-        profileImage: snapshot.data()["profileImage"]);
+    return snapshot != null
+        ? UserModel(
+            uid: uid,
+            name: snapshot.data()['name'],
+            email: snapshot.data()["email"],
+            profileImage: snapshot.data()["profileImage"])
+        : null;
   }
 
   // get user doc stream
@@ -33,4 +35,28 @@ class FirebaseService {
         .snapshots()
         .map(_userDataFromSnapshot);
   }
+
+  // USER SEARCH
+
+  // List<UserModel> _userListFromQuerySnapshot(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) {
+  //     return UserModel(
+  //       uid: doc.id,
+  //       name: doc.data()['name'] ?? '',
+  //       profileImage: doc.data()['profileImage'] ?? '',
+  //       email: doc.data()['email'] ?? '',
+  //     );
+  //   }).toList();
+  // }
+  //
+  // Stream<List<UserModel>> queryByName(search) {
+  //   return FirebaseFirestore.instance
+  //       .collection("users")
+  //       .orderBy("name")
+  //       .startAt([search])
+  //       .endAt([search + '\uf8ff'])
+  //       .limit(10)
+  //       .snapshots()
+  //       .map(_userListFromQuerySnapshot);
+  // }
 }
