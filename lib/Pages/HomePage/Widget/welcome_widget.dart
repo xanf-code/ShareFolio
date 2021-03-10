@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +31,25 @@ class WelcomeText extends StatelessWidget {
               color: Colors.white60,
               fontWeight: FontWeight.bold,
               //fontSize: 38,
+            ),
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF7934ff),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                "+ Create Project",
+                style: GoogleFonts.dmSans(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ],

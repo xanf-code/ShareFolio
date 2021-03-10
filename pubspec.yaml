@@ -44,6 +44,7 @@ dependencies:
       url: https://github.com/xanf-code/floating_navbar.git
   intl:
   pop_bottom_menu: ^1.0.0
+  fluttertoast: ^7.1.6
 
 dev_dependencies:
   flutter_test:

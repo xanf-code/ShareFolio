@@ -40,6 +40,8 @@ class HomeWidget extends StatelessWidget {
               MainAppBar(
                 image: snapshot.data.profileImage,
                 userName: snapshot.data.name,
+                uid: snapshot.data.uid,
+                email: snapshot.data.email,
               ),
               WelcomeText(
                 userName: snapshot.data.name,

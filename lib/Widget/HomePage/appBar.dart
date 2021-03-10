@@ -9,7 +9,10 @@ import 'package:my_app/Services/GeneralFunctions/pop_up_menu.dart';
 class MainAppBar extends StatelessWidget {
   final String image;
   final String userName;
-  const MainAppBar({Key key, this.image, this.userName}) : super(key: key);
+  final String email;
+  final String uid;
+  const MainAppBar({Key key, this.image, this.userName, this.email, this.uid})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +57,12 @@ class MainAppBar extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
+                      builder: (context) => ProfilePage(
+                        name: userName,
+                        email: email,
+                        image: image,
+                        uid: uid,
+                      ),
                     ),
                   );
                 },
