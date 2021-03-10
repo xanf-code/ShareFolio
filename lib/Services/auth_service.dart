@@ -11,6 +11,11 @@ class AuthService {
   Stream<String> get onAuthStateChange =>
       _firebaseAuth.authStateChanges().map((User user) => user?.uid);
 
+  // GET CURRENT USER
+  Future getCurrentUser() async {
+    return _firebaseAuth.currentUser;
+  }
+
   // GET UID
   String getCurrentUserUID() {
     return _firebaseAuth.currentUser.uid;

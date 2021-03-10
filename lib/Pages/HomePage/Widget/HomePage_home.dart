@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Models/userDB.dart';
+import 'package:my_app/Pages/HomePage/Widget/welcome_widget.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Widget/HomePage/appBar.dart';
 import 'package:my_app/Widget/auth.dart';
-import 'package:my_app/main.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({
@@ -12,9 +12,10 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of(context).auth.getCurrentUserUID();
     return StreamBuilder<UserModel>(
-      stream: FirebaseService(uid: user).userData,
+      stream:
+          FirebaseService(uid: Provider.of(context).auth.getCurrentUserUID())
+              .userData,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -22,29 +23,15 @@ class HomeWidget extends StatelessWidget {
           );
         }
         return Container(
-          decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color(0xFF08051a),
-                Color(0xFF07041b),
-              ],
-            ),
-          ),
+          decoration: myBoxDecoration(),
           child: ListView(
             children: [
               MainAppBar(
                 image: snapshot.data.profileImage,
                 userName: snapshot.data.name,
               ),
-              Center(
-                child: OutlinedButton(
-                  child: Text("Sign Out"),
-                  onPressed: () {
-                    signOut(context);
-                  },
-                ),
+              WelcomeText(
+                userName: snapshot.data.name,
               ),
             ],
           ),
@@ -53,18 +40,18 @@ class HomeWidget extends StatelessWidget {
     );
   }
 
-  void signOut(context) async {
-    try {
-      final auth = Provider.of(context).auth;
-      await auth.signOut();
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeController(),
-          ),
-          (route) => false);
-    } catch (e) {
-      print(e);
-    }
+  BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      gradient: const LinearGradient(
+        stops: [0.0, 1.0, 1.5],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color(0xFF08051a),
+          Color(0xFF07041b),
+          Color(0xFF081631),
+        ],
+      ),
+    );
   }
 }

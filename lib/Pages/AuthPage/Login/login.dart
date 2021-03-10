@@ -123,17 +123,10 @@ class _LoginFormState extends State<LoginForm> {
   void signIn() async {
     try {
       final auth = Provider.of(context).auth;
-      String uid = await auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
-      print("Signed In $uid");
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeController(),
-          ),
-          (route) => false);
     } catch (e) {
       setState(() {
         _error = e.message;
@@ -163,7 +156,9 @@ class _LoginFormState extends State<LoginForm> {
           Provider.of(context).auth.getCurrentUserUID());
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomeController()),
+          MaterialPageRoute(
+            builder: (context) => HomeController(),
+          ),
           (route) => false);
     } catch (e) {
       setState(() {

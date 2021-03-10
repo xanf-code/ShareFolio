@@ -1,17 +1,10 @@
 import 'package:floating_navbar/floating_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-
 import 'Widget/HomePage_home.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key}) : super(key: key);
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> _widgetOptions = <Widget>[
+class MyHomePage extends StatelessWidget {
+  final List<Widget> _widgetOptions = <Widget>[
     HomeWidget(),
     Center(
       child: Text("Home"),

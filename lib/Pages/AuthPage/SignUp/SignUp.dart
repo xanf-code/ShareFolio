@@ -114,7 +114,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             _passwordController.text.trim(), _fullNameController.text, context);
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomeController()),
+            MaterialPageRoute(
+              builder: (context) => HomeController(),
+            ),
             (route) => false);
       } else if (_passwordController.text != _confirmPasswordController.text) {
         showTopSnackBar(

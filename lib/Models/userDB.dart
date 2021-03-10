@@ -20,9 +20,9 @@ class UserModel {
         'profileImage': profileImage,
       };
 
-  UserModel.fromSnapshot(DocumentSnapshot snapshot)
-      : name = snapshot.data()["name"],
-        email = snapshot.data()["email"],
-        uid = snapshot.data()["uid"],
-        profileImage = snapshot.data()["profileImage"];
+  // UserModel.fromSnapshot(DocumentSnapshot snapshot)
+  //     : name = snapshot.data()["name"],
+  //       email = snapshot.data()["email"],
+  //       uid = snapshot.data()["uid"],
+  //       profileImage = snapshot.data()["profileImage"];
 }
