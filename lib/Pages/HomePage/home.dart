@@ -19,7 +19,11 @@ class MyHomePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: FloatingNavBar(
         color: Color(0xff121212),
+        iconColor: Color(0xFFCF6679),
+        hapticFeedback: true,
+        horizontalPadding: MediaQuery.of(context).size.width / 8,
         pages: _widgetOptions,
+        borderRadius: 30,
         icons: [
           Icon(
             FeatherIcons.home,
@@ -37,7 +41,6 @@ class MyHomePage extends StatelessWidget {
             size: 22,
           )
         ],
-        iconColor: Color(0xFFCF6679),
       ),
     );
   }

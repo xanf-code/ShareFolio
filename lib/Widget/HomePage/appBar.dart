@@ -66,12 +66,15 @@ class MainAppBar extends StatelessWidget {
                     ),
                   );
                 },
-                child: CircleAvatar(
-                  radius: 22,
-                  backgroundImage: CachedNetworkImageProvider(
-                    image == " "
-                        ? "https://mir-s3-cdn-cf.behance.net/user/115/2b34d1156252643.5cb89af1a9b06.jpg"
-                        : image,
+                child: Hero(
+                  tag: 'profile',
+                  child: CircleAvatar(
+                    radius: 22,
+                    backgroundImage: CachedNetworkImageProvider(
+                      image == " "
+                          ? "https://mir-s3-cdn-cf.behance.net/user/115/2b34d1156252643.5cb89af1a9b06.jpg"
+                          : image,
+                    ),
                   ),
                 ),
               ),

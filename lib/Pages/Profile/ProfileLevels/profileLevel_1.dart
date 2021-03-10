@@ -24,22 +24,31 @@ class level1_profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: CachedNetworkImageProvider(
-            image ??
-                "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
+        Hero(
+          tag: 'profile',
+          child: CircleAvatar(
+            radius: 40,
+            backgroundImage: CachedNetworkImageProvider(
+              image ??
+                  "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
+            ),
           ),
         ),
         SizedBox(
           height: 6,
         ),
-        Text(
-          name,
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-            color: Colors.white,
+        Hero(
+          tag: 'nameText',
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              name,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
         Text(

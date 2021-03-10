@@ -167,7 +167,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "2b8d443552397de8bb2feb7faa7b020e8d837527"
+      resolved-ref: "68db359c864df529364711906c9aa839e9984fc8"
       url: "https://github.com/xanf-code/floating_navbar.git"
     source: git
     version: "1.0.0"

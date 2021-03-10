@@ -17,12 +17,18 @@ class WelcomeText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Hi " + userName + " 👋",
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
+          Hero(
+            tag: 'nameText',
+            child: Material(
+              color: Colors.transparent,
+              child: Text(
+                "Hi " + userName + " 👋",
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
             ),
           ),
           Text(
