@@ -52,7 +52,7 @@ class HomeController extends StatelessWidget {
         }
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
-          return signedIn ? MyHomePage() : LoginForm();
+          return signedIn ? MyHomePage() : SignUpScreen();
         }
         return CircularProgressIndicator();
       },

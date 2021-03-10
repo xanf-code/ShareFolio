@@ -389,6 +389,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  pop_bottom_menu:
+    dependency: "direct main"
+    description:
+      name: pop_bottom_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   process:
     dependency: transitive
     description:

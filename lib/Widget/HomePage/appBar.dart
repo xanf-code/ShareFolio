@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:my_app/Pages/Profile/profile.dart';
+import 'package:my_app/Services/GeneralFunctions/pop_up_menu.dart';
 
 class MainAppBar extends StatelessWidget {
   final String image;
@@ -24,18 +25,24 @@ class MainAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xFFb615dd),
-                  width: 1.5,
+            GestureDetector(
+              onTap: () {
+                HapticFeedback.mediumImpact();
+                Functions().showMenu(context);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFb615dd),
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Icon(
-                FeatherIcons.menu,
-                color: Colors.white,
+                child: Icon(
+                  FeatherIcons.alignLeft,
+                  color: Colors.white,
+                ),
               ),
             ),
             AvatarGlow(

@@ -104,6 +104,7 @@ class _LoginFormState extends State<LoginForm> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
+                        fullscreenDialog: true,
                         builder: (context) => SignUpScreen(),
                       ),
                       (route) => false);

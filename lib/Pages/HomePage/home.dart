@@ -28,7 +28,7 @@ class MyHomePage extends StatelessWidget {
             size: 22,
           ),
           Icon(
-            FeatherIcons.trendingUp,
+            FeatherIcons.plusCircle,
             color: Colors.white,
             size: 22,
           ),
