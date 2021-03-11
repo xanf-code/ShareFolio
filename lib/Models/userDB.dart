@@ -5,12 +5,14 @@ class UserModel {
   String email;
   String uid;
   String profileImage;
+  String status;
 
   UserModel({
     this.name,
     this.email,
     this.uid,
     this.profileImage,
+    this.status,
   });
 
   Map<String, dynamic> toJson() => {
@@ -18,6 +20,7 @@ class UserModel {
         'email': email,
         'uid': uid,
         'profileImage': profileImage,
+        'status': status,
       };
 
   // UserModel.fromSnapshot(DocumentSnapshot snapshot)

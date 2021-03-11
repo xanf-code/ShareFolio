@@ -62,7 +62,7 @@ class level1_profile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Container(
-            width: MediaQuery.of(context).size.width / 1.65,
+            width: MediaQuery.of(context).size.width / 1.5,
             decoration: BoxDecoration(
               color: Color(0xFF1a2b3f),
               borderRadius: BorderRadius.circular(10),

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:my_app/Pages/Groups/createGroup.dart';
 
 class WelcomeText extends StatelessWidget {
   final String userName;
@@ -42,18 +44,30 @@ class WelcomeText extends StatelessWidget {
           SizedBox(
             height: 18,
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xFF7934ff),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                "+ Create Project",
-                style: GoogleFonts.dmSans(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateGroup(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF7934ff),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "+ Create Group",
+                  style: GoogleFonts.dmSans(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

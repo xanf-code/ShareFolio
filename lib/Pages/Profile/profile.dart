@@ -9,8 +9,9 @@ class ProfilePage extends StatelessWidget {
   final String name;
   final String email;
   final String uid;
-
-  const ProfilePage({Key key, this.image, this.name, this.email, this.uid})
+  final String status;
+  const ProfilePage(
+      {Key key, this.image, this.name, this.email, this.uid, this.status})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,10 @@ class ProfilePage extends StatelessWidget {
                 Divider(
                   color: Colors.white54,
                 ),
-                profileLevel2(),
+                profileLevel2(
+                  uid: uid,
+                  status: status,
+                ),
                 OutlinedButton(
                   child: Text("Sign Out"),
                   onPressed: () {
@@ -66,7 +70,7 @@ class ProfilePage extends StatelessWidget {
 
   void signOut(context) async {
     try {
-      final auth = Provider.of(context).auth;
+      final auth = Providers.of(context).auth;
       await auth.signOut();
     } catch (e) {
       print(e);

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Widget/auth.dart';
 
@@ -8,8 +9,17 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Checking app state (User logged in or logged Out?)
-  Stream<String> get onAuthStateChange =>
-      _firebaseAuth.authStateChanges().map((User user) => user?.uid);
+  // Stream<String> get onAuthStateChange => _firebaseAuth.authStateChanges().map(
+  //       (User user) => user?.uid,
+  //     );
+  // temp
+  UserModel _userFromFirebaseUser(User user) {
+    return user != null ? UserModel(uid: user.uid) : null;
+  }
+
+  Stream<UserModel> get user {
+    return FirebaseAuth.instance.authStateChanges().map(_userFromFirebaseUser);
+  }
 
   // GET CURRENT USER
   Future getCurrentUser() async {
@@ -18,7 +28,8 @@ class AuthService {
 
   // GET UID
   String getCurrentUserUID() {
-    return _firebaseAuth.currentUser.uid;
+    String currentUserID = _firebaseAuth.currentUser.uid;
+    return currentUserID;
   }
 
   // GET EMAIL
@@ -46,7 +57,7 @@ class AuthService {
     await firebaseUser.updateProfile(displayName: name);
 
     FirebaseService().createUserDatabase(context, name, email, firebaseUser.uid,
-        firebaseUser.photoURL, Provider.of(context).auth.getCurrentUserUID());
+        firebaseUser.photoURL, Providers.of(context).auth.getCurrentUserUID());
     await firebaseUser.reload();
 
     return firebaseUser.uid;

@@ -13,6 +13,7 @@ class FirebaseService {
       "email": email,
       "uid": uid,
       'profileImage': photoURL ?? " ",
+      "status": " ",
     });
   }
 
@@ -23,7 +24,8 @@ class FirebaseService {
             uid: uid,
             name: snapshot.data()['name'],
             email: snapshot.data()["email"],
-            profileImage: snapshot.data()["profileImage"])
+            profileImage: snapshot.data()["profileImage"],
+            status: snapshot.data()["status"])
         : null;
   }
 

@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pop_bottom_menu/pop_bottom_menu.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class Functions {
   void showMenu(context) {
@@ -89,5 +93,26 @@ class Functions {
         );
       },
     );
+  }
+
+  void connectivityStatus(context) {
+    Connectivity().onConnectivityChanged.listen(
+      (ConnectivityResult result) {
+        if (result == ConnectivityResult.none) {
+          showTopSnackBar(
+            context,
+            CustomSnackBar.success(
+              message: "No Internet connection, You are offline now.",
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Future updateStatus(userID, statusText) async {
+    await FirebaseFirestore.instance.collection("users").doc(userID).update({
+      "status": statusText,
+    });
   }
 }

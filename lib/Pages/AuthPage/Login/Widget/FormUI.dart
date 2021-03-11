@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Level3Form extends StatelessWidget {
@@ -84,12 +83,14 @@ class FieldWidget extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final bool isObscure;
+  final int length;
   const FieldWidget({
     Key key,
     this.label,
     this.hint,
     this.controller,
     this.isObscure,
+    this.length,
   }) : super(key: key);
 
   @override
@@ -117,6 +118,7 @@ class FieldWidget extends StatelessWidget {
             right: 35,
           ),
           child: TextFormField(
+            maxLines: length ?? 1,
             obscureText: isObscure,
             controller: controller,
             style: GoogleFonts.dmSans(

@@ -123,11 +123,17 @@ class _LoginFormState extends State<LoginForm> {
 
   void signIn() async {
     try {
-      final auth = Provider.of(context).auth;
+      final auth = Providers.of(context).auth;
       await auth.signInWithEmailAndPassword(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Wrapper(),
+          ),
+          (route) => false);
     } catch (e) {
       setState(() {
         _error = e.message;
@@ -146,19 +152,19 @@ class _LoginFormState extends State<LoginForm> {
 
   void googleSignIn() async {
     try {
-      final auth = Provider.of(context).auth;
+      final auth = Providers.of(context).auth;
       await auth.signInWithGoogle(context);
       FirebaseService().createUserDatabase(
           context,
-          Provider.of(context).auth.getCurrentUserName(),
-          Provider.of(context).auth.getCurrentUserEmail(),
-          Provider.of(context).auth.getCurrentUserUID(),
-          Provider.of(context).auth.getCurrentUserPic(),
-          Provider.of(context).auth.getCurrentUserUID());
+          Providers.of(context).auth.getCurrentUserName(),
+          Providers.of(context).auth.getCurrentUserEmail(),
+          Providers.of(context).auth.getCurrentUserUID(),
+          Providers.of(context).auth.getCurrentUserPic(),
+          Providers.of(context).auth.getCurrentUserUID());
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeController(),
+            builder: (context) => Wrapper(),
           ),
           (route) => false);
     } catch (e) {

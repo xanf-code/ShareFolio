@@ -87,7 +87,7 @@ class _PassResetState extends State<PassReset> {
   String _error;
   void resetPass() async {
     try {
-      final auth = Provider.of(context).auth;
+      final auth = Providers.of(context).auth;
       await auth.sendPasswordResetEmail(
         _resetPass.text.trim(),
       );
@@ -100,7 +100,7 @@ class _PassResetState extends State<PassReset> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeController(),
+            builder: (context) => Wrapper(),
           ),
           (route) => false);
     } catch (e) {

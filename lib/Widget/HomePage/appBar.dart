@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:my_app/Pages/Profile/profile.dart';
-import 'package:my_app/Services/GeneralFunctions/pop_up_menu.dart';
+import 'package:my_app/Services/GeneralFunctions/functions.dart';
 
 class MainAppBar extends StatelessWidget {
   final String image;
   final String userName;
   final String email;
   final String uid;
-  const MainAppBar({Key key, this.image, this.userName, this.email, this.uid})
+  final String status;
+  const MainAppBar(
+      {Key key, this.image, this.userName, this.email, this.uid, this.status})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,7 @@ class MainAppBar extends StatelessWidget {
                         email: email,
                         image: image,
                         uid: uid,
+                        status: status,
                       ),
                     ),
                   );

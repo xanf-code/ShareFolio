@@ -37,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ), // Heading
               Level2Form(
-                type: "Sign up with one of the following options.",
+                type: "Sign up with the following options.",
               ), // Text
               FieldWidget(
                 label: "Name",
@@ -108,14 +108,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void signUp() async {
     try {
-      final auth = Provider.of(context).auth;
+      final auth = Providers.of(context).auth;
       if (_passwordController.text == _confirmPasswordController.text) {
         await auth.createUserWithEmailAndPassword(_emailController.text.trim(),
             _passwordController.text.trim(), _fullNameController.text, context);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => HomeController(),
+              builder: (context) => Wrapper(),
             ),
             (route) => false);
       } else if (_passwordController.text != _confirmPasswordController.text) {
