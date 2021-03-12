@@ -15,8 +15,10 @@ class groupServices {
       "groupName": groupName,
       "groupBio": groupBio,
       "groupType": groupType,
-      "groupImage": profileImage,
-      "groupBanner": bannerImage,
+      "groupImage": profileImage ??
+          "https://i.pinimg.com/originals/76/94/84/769484dafbe89bf2b8a22379658956c4.jpg",
+      "groupBanner": bannerImage ??
+          "https://www.mub.eps.manchester.ac.uk/graphene/wp-content/themes/uom-theme/assets/images/default-banner.jpg",
       "groupAdmin": groupAdmin,
       "groupAdminName": groupAdminName,
       "members": [],

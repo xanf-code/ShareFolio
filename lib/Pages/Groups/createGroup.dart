@@ -10,6 +10,7 @@ import 'package:my_app/Pages/Groups/widgets/formHead.dart';
 import 'package:my_app/Services/firebase_services/groupServices.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:my_app/Widget/const_gradient.dart';
+import 'package:my_app/Widget/loading/loader.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,6 +27,7 @@ class _CreateGroupState extends State<CreateGroup> {
   TextEditingController groupBio = TextEditingController();
   File bannerImage;
   File profileImage;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,134 +37,136 @@ class _CreateGroupState extends State<CreateGroup> {
           decoration: BoxDecoration(
             gradient: pageGradient,
           ),
-          child: ListView(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.indigo,
-                    child: bannerImage == null
-                        ? IconButton(
-                            icon: Icon(
-                              FontAwesomeIcons.upload,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              HapticFeedback.mediumImpact();
-                              pickBannerImage();
-                            },
-                          )
-                        : Image.file(
-                            bannerImage,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                  Positioned(
-                    top: 30,
-                    left: 20,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      child: profileImage == null
-                          ? IconButton(
-                              icon: Icon(
-                                FontAwesomeIcons.upload,
-                                size: 20,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                HapticFeedback.mediumImpact();
-                                pickProfileImage();
-                              },
-                            )
-                          : ClipOval(
-                              child: CircleAvatar(
-                                child: Image.file(
-                                  profileImage,
+          child: loading == true
+              ? LoadingWidget()
+              : ListView(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          color: Color(0xFF59c895),
+                          child: bannerImage == null
+                              ? IconButton(
+                                  icon: Icon(
+                                    FeatherIcons.upload,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    HapticFeedback.mediumImpact();
+                                    pickImage(1);
+                                  },
+                                )
+                              : Image.file(
+                                  bannerImage,
                                   fit: BoxFit.cover,
                                 ),
-                              ),
-                            ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFe0f2f1),
-                        border: Border.all(
-                          width: 2,
-                          color: Color(0xFFD90B0B),
-                          style: BorderStyle.solid,
                         ),
-                      ),
+                        Positioned(
+                          top: 30,
+                          left: 20,
+                          child: Container(
+                            width: 120,
+                            height: 120,
+                            child: profileImage == null
+                                ? IconButton(
+                                    icon: Icon(
+                                      FeatherIcons.upload,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      HapticFeedback.mediumImpact();
+                                      pickImage(0);
+                                    },
+                                  )
+                                : ClipOval(
+                                    child: CircleAvatar(
+                                      child: Image.file(
+                                        profileImage,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF59c895),
+                              border: Border.all(
+                                width: 2,
+                                color: Colors.white,
+                                style: BorderStyle.solid,
+                              ),
+                            ),
+                          ),
+                        ),
+                        bannerImage != null
+                            ? Positioned(
+                                right: 10,
+                                bottom: 10,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    HapticFeedback.mediumImpact();
+                                    setState(() {
+                                      bannerImage = null;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black87,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Clear",
+                                        style: GoogleFonts.dmSans(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox.shrink(),
+                        profileImage != null
+                            ? Positioned(
+                                top: 80,
+                                left: 30,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    HapticFeedback.mediumImpact();
+                                    setState(() {
+                                      profileImage = null;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black87,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Clear",
+                                        style: GoogleFonts.dmSans(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox.shrink()
+                      ],
                     ),
-                  ),
-                  bannerImage != null
-                      ? Positioned(
-                          right: 10,
-                          bottom: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              HapticFeedback.mediumImpact();
-                              setState(() {
-                                bannerImage = null;
-                              });
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: Colors.black87,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Clear",
-                                  style: GoogleFonts.dmSans(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                  profileImage != null
-                      ? Positioned(
-                          top: 80,
-                          left: 30,
-                          child: GestureDetector(
-                            onTap: () {
-                              HapticFeedback.mediumImpact();
-                              setState(() {
-                                profileImage = null;
-                              });
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: Colors.black87,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Clear",
-                                  style: GoogleFonts.dmSans(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : SizedBox.shrink()
-                ],
-              ),
-              FormHead(),
-              createForm(),
-            ],
-          ),
+                    FormHead(),
+                    createForm(),
+                  ],
+                ),
         ),
       ),
     );
@@ -254,8 +258,8 @@ class _CreateGroupState extends State<CreateGroup> {
           padding: const EdgeInsets.only(top: 8.0),
           child: FieldWidget(
             length: 10,
-            label: "GROUP DESCRIPTION",
-            hint: 'What is this group about?',
+            label: "CIRCLE DESCRIPTION",
+            hint: 'What is this circle about?',
             controller: groupBio,
             isObscure: false,
           ),
@@ -290,14 +294,25 @@ class _CreateGroupState extends State<CreateGroup> {
             GestureDetector(
               onTap: () {
                 HapticFeedback.mediumImpact();
-                if (groupName.text.isEmpty && groupBio.text.isEmpty) {
+                if (groupName.text.isEmpty || groupBio.text.isEmpty) {
                   showTopSnackBar(
                     context,
                     CustomSnackBar.error(
                       message: "One or More fields empty",
                     ),
                   );
+                } else if (profileImage == null || bannerImage == null) {
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.error(
+                      message:
+                          "please choose a profile and banner picture to continue.",
+                    ),
+                  );
                 } else {
+                  setState(() {
+                    loading = true;
+                  });
                   switch (type) {
                     case "PRIVATE":
                       privateGroups(currentUser, currentUserName);
@@ -333,7 +348,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Create Group",
+                        "Create Circle",
                         style: GoogleFonts.dmSans(
                           color: Colors.white,
                           fontSize: 22,
@@ -374,11 +389,13 @@ class _CreateGroupState extends State<CreateGroup> {
       setState(() {
         profileImage = null;
         bannerImage = null;
+        loading = false;
       });
+      Navigator.pop(context);
       showTopSnackBar(
         context,
         CustomSnackBar.success(
-          message: "Group Created",
+          message: "Circle Created",
         ),
       );
     });
@@ -396,11 +413,13 @@ class _CreateGroupState extends State<CreateGroup> {
       setState(() {
         bannerImage = null;
         profileImage = null;
+        loading = false;
       });
+      Navigator.pop(context);
       showTopSnackBar(
         context,
         CustomSnackBar.success(
-          message: "Group Created",
+          message: "Circle Created",
         ),
       );
     });
@@ -416,21 +435,15 @@ class _CreateGroupState extends State<CreateGroup> {
     });
   }
 
-  Future pickProfileImage() async {
+  Future pickImage(int type) async {
     final fileImage = await ImagePicker().getImage(source: ImageSource.gallery);
-    if (fileImage != null) {
-      setState(() {
+    setState(() {
+      if (fileImage != null && type == 0) {
         profileImage = File(fileImage.path);
-      });
-    }
-  }
-
-  Future pickBannerImage() async {
-    final fileImage = await ImagePicker().getImage(source: ImageSource.gallery);
-    if (fileImage != null) {
-      setState(() {
+      }
+      if (fileImage != null && type == 1) {
         bannerImage = File(fileImage.path);
-      });
-    }
+      }
+    });
   }
 }

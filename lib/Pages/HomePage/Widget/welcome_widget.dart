@@ -63,7 +63,7 @@ class WelcomeText extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  "+ Create Group",
+                  "+ Create Circle",
                   style: GoogleFonts.dmSans(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

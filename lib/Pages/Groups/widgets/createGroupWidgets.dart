@@ -15,8 +15,8 @@ class CreateGroupWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: FieldWidget(
-            label: "GROUP NAME",
-            hint: 'Pick a group name',
+            label: "CIRCLE NAME",
+            hint: 'Pick a circle name',
             controller: groupName,
             isObscure: false,
           ),
@@ -30,7 +30,7 @@ class CreateGroupWidget extends StatelessWidget {
             bottom: 12,
           ),
           child: Text(
-            "Group Type".toUpperCase(),
+            "Circle Type".toUpperCase(),
             style: GoogleFonts.dmSans(
               color: Colors.white,
               fontSize: 16,

@@ -14,7 +14,7 @@ class FormHead extends StatelessWidget {
             top: 12,
           ),
           child: Level1Form(
-            type: "Create Group",
+            type: "Create Circle",
           ),
         ), // Heading
         Level2Form(

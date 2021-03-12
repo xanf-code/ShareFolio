@@ -3,31 +3,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
-import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
 import 'package:my_app/Pages/HomePage/home.dart';
+import 'package:my_app/Pages/Onbarding/onboarding.dart';
 import 'package:my_app/Services/auth_service.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
+int initScreen;
+
+Future<void> main() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = preferences.getInt('initScreen');
+  await preferences.setInt('initScreen', 1);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  //@override
-  // Widget build(BuildContext context) {
-  //   return Provider(
-  //     db: FirebaseFirestore.instance,
-  //     auth: AuthService(),
-  //     child: MaterialApp(
-  //       debugShowCheckedModeBanner: false,
-  //       home: HomeController(),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Providers(
@@ -37,7 +31,8 @@ class MyApp extends StatelessWidget {
         value: AuthService().user,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Wrapper(),
+          home:
+              initScreen == 0 || initScreen == null ? OnBoarding() : Wrapper(),
         ),
       ),
     );
@@ -57,20 +52,3 @@ class Wrapper extends StatelessWidget {
     return MyHomePage();
   }
 }
-//
-// class HomeController extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final AuthService auth = Provider.of(context).auth;
-//     return StreamBuilder<String>(
-//       stream: auth.onAuthStateChange,
-//       builder: (context, AsyncSnapshot<String> snapshot) {
-//         if (snapshot.connectionState == ConnectionState.active) {
-//           final bool signedIn = snapshot.hasData;
-//           return signedIn ? MyHomePage() : SignUpScreen();
-//         }
-//         return CircularProgressIndicator();
-//       },
-//     );
-//   }
-// }
