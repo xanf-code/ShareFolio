@@ -75,7 +75,7 @@ class MainAppBar extends StatelessWidget {
                     radius: 22,
                     backgroundImage: CachedNetworkImageProvider(
                       image == " "
-                          ? "https://mir-s3-cdn-cf.behance.net/user/115/2b34d1156252643.5cb89af1a9b06.jpg"
+                          ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
                           : image,
                     ),
                   ),

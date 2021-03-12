@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_app/Widget/auth.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -6,7 +7,7 @@ class groupServices {
   String groupID = Uuid().v4();
 
   Future createPublicGroup(groupName, groupBio, groupType, groupAdmin,
-      groupAdminName, bannerImage, profileImage) async {
+      groupAdminName, bannerImage, profileImage, tags) async {
     await FirebaseFirestore.instance
         .collection("publicGroups")
         .doc(groupID)
@@ -22,11 +23,12 @@ class groupServices {
       "groupAdmin": groupAdmin,
       "groupAdminName": groupAdminName,
       "members": [],
+      "tag": tags,
     });
   }
 
   Future createPrivateGroup(groupName, groupBio, groupType, currentUser,
-      groupAdminName, bannerImage, profileImage) async {
+      groupAdminName, bannerImage, profileImage, tags) async {
     DocumentSnapshot docs = await FirebaseFirestore.instance
         .collection("users")
         .doc(currentUser)
@@ -42,6 +44,7 @@ class groupServices {
         "groupAdmin": currentUser,
         "groupAdminName": groupAdminName,
         "members": [],
+        "tag": tags,
       });
     }
   }

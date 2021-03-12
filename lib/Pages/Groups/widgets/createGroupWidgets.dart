@@ -30,7 +30,7 @@ class CreateGroupWidget extends StatelessWidget {
             bottom: 12,
           ),
           child: Text(
-            "Circle Type".toUpperCase(),
+            "Circle Privacy".toUpperCase(),
             style: GoogleFonts.dmSans(
               color: Colors.white,
               fontSize: 16,

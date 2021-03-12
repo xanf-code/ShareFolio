@@ -49,6 +49,8 @@ dependencies:
   firebase_storage: ^8.0.0
   flutter_spinkit: ^4.1.2
   shared_preferences: ^2.0.4
+  get: ^3.26.0
+  slider_button: ^0.6.0
 
 dev_dependencies:
   flutter_test:

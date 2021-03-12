@@ -29,8 +29,9 @@ class level1_profile extends StatelessWidget {
           child: CircleAvatar(
             radius: 40,
             backgroundImage: CachedNetworkImageProvider(
-              image ??
-                  "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
+              image == " "
+                  ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+                  : image,
             ),
           ),
         ),

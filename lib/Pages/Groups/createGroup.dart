@@ -2,18 +2,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/Groups/widgets/createGroupWidgets.dart';
 import 'package:my_app/Pages/Groups/widgets/formHead.dart';
+import 'package:my_app/Pages/HomePage/home.dart';
 import 'package:my_app/Services/firebase_services/groupServices.dart';
 import 'package:my_app/Widget/auth.dart';
 import 'package:my_app/Widget/const_gradient.dart';
 import 'package:my_app/Widget/loading/loader.dart';
+import 'package:slider_button/slider_button.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CreateGroup extends StatefulWidget {
   @override
@@ -40,6 +42,7 @@ class _CreateGroupState extends State<CreateGroup> {
           child: loading == true
               ? LoadingWidget()
               : ListView(
+                  physics: BouncingScrollPhysics(),
                   children: [
                     Stack(
                       children: [
@@ -175,6 +178,7 @@ class _CreateGroupState extends State<CreateGroup> {
   Widget createForm() {
     String currentUser = Providers.of(context).auth.getCurrentUserUID();
     String currentUserName = Providers.of(context).auth.getCurrentUserName();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +189,6 @@ class _CreateGroupState extends State<CreateGroup> {
         Padding(
           padding: const EdgeInsets.only(
             left: 37.0,
-            bottom: 10,
           ),
           child: Row(
             children: List.generate(
@@ -213,7 +216,7 @@ class _CreateGroupState extends State<CreateGroup> {
                         border: Border.all(
                           width: 2,
                           color: activeCategory == index
-                              ? Color(0xffbb85fb)
+                              ? Colors.indigo
                               : Colors.transparent,
                         ),
                         borderRadius: BorderRadius.circular(12),
@@ -286,7 +289,7 @@ class _CreateGroupState extends State<CreateGroup> {
                   ),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF7934ff),
+                    color: Color(0xff6506d5),
                   ),
                 ),
               ),
@@ -341,7 +344,7 @@ class _CreateGroupState extends State<CreateGroup> {
                   width: MediaQuery.of(context).size.width / 1.8,
                   height: 75,
                   decoration: BoxDecoration(
-                    color: Color(0xFF7934ff),
+                    color: Color(0xff6506d5),
                     borderRadius: BorderRadius.circular(35),
                   ),
                   child: Row(
@@ -349,10 +352,10 @@ class _CreateGroupState extends State<CreateGroup> {
                     children: [
                       Text(
                         "Create Circle",
-                        style: GoogleFonts.dmSans(
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 22,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(
@@ -370,9 +373,15 @@ class _CreateGroupState extends State<CreateGroup> {
             ),
           ],
         ),
+        SizedBox(
+          height: 20,
+        ),
       ],
     );
   }
+
+  //GET ARGUMENTS
+  var tagName = Get.arguments;
 
   privateGroups(
     currentUser,
@@ -382,7 +391,7 @@ class _CreateGroupState extends State<CreateGroup> {
     String profileImageURL = await groupServices().uploadImage(profileImage);
     groupServices()
         .createPrivateGroup(groupName.text, groupBio.text, type, currentUser,
-            currentUserName, downloadImage, profileImageURL)
+            currentUserName, downloadImage, profileImageURL, tagName)
         .whenComplete(() {
       groupName.clear();
       groupBio.clear();
@@ -391,7 +400,7 @@ class _CreateGroupState extends State<CreateGroup> {
         bannerImage = null;
         loading = false;
       });
-      Navigator.pop(context);
+      Get.offAll(MyHomePage());
       showTopSnackBar(
         context,
         CustomSnackBar.success(
@@ -406,7 +415,7 @@ class _CreateGroupState extends State<CreateGroup> {
     String profileImageURL = await groupServices().uploadImage(profileImage);
     groupServices()
         .createPublicGroup(groupName.text, groupBio.text, type, currentUser,
-            currentUserName, downloadImage, profileImageURL)
+            currentUserName, downloadImage, profileImageURL, tagName)
         .whenComplete(() {
       groupName.clear();
       groupBio.clear();
@@ -415,7 +424,7 @@ class _CreateGroupState extends State<CreateGroup> {
         profileImage = null;
         loading = false;
       });
-      Navigator.pop(context);
+      Get.offAll(MyHomePage());
       showTopSnackBar(
         context,
         CustomSnackBar.success(
@@ -433,6 +442,7 @@ class _CreateGroupState extends State<CreateGroup> {
       bannerImage = null;
       profileImage = null;
     });
+    Get.offAll(MyHomePage());
   }
 
   Future pickImage(int type) async {

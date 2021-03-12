@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
 import 'package:my_app/Pages/HomePage/home.dart';
@@ -12,12 +13,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 int initScreen;
 
-Future<void> main() async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  initScreen = preferences.getInt('initScreen');
-  await preferences.setInt('initScreen', 1);
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = prefs.getInt("initScreen");
+  await prefs.setInt("initScreen", 1);
   runApp(MyApp());
 }
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       auth: AuthService(),
       child: StreamProvider<UserModel>.value(
         value: AuthService().user,
-        child: MaterialApp(
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           home:
               initScreen == 0 || initScreen == null ? OnBoarding() : Wrapper(),

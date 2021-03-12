@@ -66,12 +66,6 @@ class _profileLevel2State extends State<profileLevel2> {
                     maxLines: 1,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Tell us about yourself?",
-                      hintStyle: GoogleFonts.dmSans(
-                        color: Colors.white30,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                      ),
                     ),
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w500,
@@ -105,17 +99,26 @@ class _profileLevel2State extends State<profileLevel2> {
 
   void submitFunction() {
     HapticFeedback.mediumImpact();
-    Functions().updateStatus(widget.uid, statusController.text).whenComplete(
-      () {
-        FocusScope.of(context).unfocus();
-        showTopSnackBar(
-          context,
-          CustomSnackBar.success(
-            message: "Status Updated",
-          ),
-        );
-      },
-    );
+    if (statusController.text == " ") {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "Empty status cannot be saved",
+        ),
+      );
+    } else {
+      Functions().updateStatus(widget.uid, statusController.text).whenComplete(
+        () {
+          FocusScope.of(context).unfocus();
+          showTopSnackBar(
+            context,
+            CustomSnackBar.success(
+              message: "Status Updated",
+            ),
+          );
+        },
+      );
+    }
   }
 }
 

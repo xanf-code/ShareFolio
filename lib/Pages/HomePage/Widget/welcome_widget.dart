@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:my_app/Pages/Groups/createGroup.dart';
+import 'package:my_app/Pages/Groups/widgets/tags_widget.dart';
 
 class WelcomeText extends StatelessWidget {
   final String userName;
@@ -50,7 +51,7 @@ class WelcomeText extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateGroup(),
+                  builder: (context) => TagsWidget(),
                   fullscreenDialog: true,
                 ),
               );
