@@ -51,6 +51,7 @@ dependencies:
   shared_preferences: ^2.0.4
   get: ^3.26.0
   slider_button: ^0.6.0
+  timeago: ^3.0.2
 
 dev_dependencies:
   flutter_test:

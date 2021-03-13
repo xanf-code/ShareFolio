@@ -268,113 +268,72 @@ class _CreateGroupState extends State<CreateGroup> {
           ),
         ),
         SizedBox(
-          height: 20,
+          height: 30,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () {
-                reset();
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 30.0, top: 10.0),
-                child: Container(
-                  width: 75,
-                  height: 75,
-                  child: Icon(
-                    FeatherIcons.x,
-                    size: 24,
+        GestureDetector(
+          onTap: () {
+            HapticFeedback.mediumImpact();
+            if (groupName.text.isEmpty || groupBio.text.isEmpty) {
+              showTopSnackBar(
+                context,
+                CustomSnackBar.error(
+                  message: "One or More fields empty",
+                ),
+              );
+            } else if (profileImage == null || bannerImage == null) {
+              showTopSnackBar(
+                context,
+                CustomSnackBar.error(
+                  message:
+                      "please choose a profile and banner picture to continue.",
+                ),
+              );
+            } else {
+              setState(() {
+                loading = true;
+              });
+              switch (type) {
+                case "PRIVATE":
+                  uploadGroups(currentUser, currentUserName);
+                  break;
+                case "PUBLIC":
+                  uploadGroups(currentUser, currentUserName);
+                  break;
+                default:
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.error(
+                      message: "something went wrong :(",
+                    ),
+                  );
+                  break;
+              }
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 35.0,
+              right: 35,
+            ),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 90,
+              decoration: BoxDecoration(
+                color: Color(0xff6506d5),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "CREATE CIRCLE",
+                  style: GoogleFonts.dmSans(
                     color: Colors.white,
-                  ),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xff6506d5),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                HapticFeedback.mediumImpact();
-                if (groupName.text.isEmpty || groupBio.text.isEmpty) {
-                  showTopSnackBar(
-                    context,
-                    CustomSnackBar.error(
-                      message: "One or More fields empty",
-                    ),
-                  );
-                } else if (profileImage == null || bannerImage == null) {
-                  showTopSnackBar(
-                    context,
-                    CustomSnackBar.error(
-                      message:
-                          "please choose a profile and banner picture to continue.",
-                    ),
-                  );
-                } else {
-                  setState(() {
-                    loading = true;
-                  });
-                  switch (type) {
-                    case "PRIVATE":
-                      privateGroups(currentUser, currentUserName);
-                      break;
-                    case "PUBLIC":
-                      publicGroups(currentUser, currentUserName);
-                      break;
-                    default:
-                      showTopSnackBar(
-                        context,
-                        CustomSnackBar.error(
-                          message: "something went wrong :(",
-                        ),
-                      );
-                      break;
-                  }
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 30.0,
-                  right: 30,
-                  top: 10,
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 1.8,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: Color(0xff6506d5),
-                    borderRadius: BorderRadius.circular(35),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Create Circle",
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Icon(
-                        FeatherIcons.arrowRightCircle,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
+          ),
         ),
       ],
     );
@@ -383,66 +342,47 @@ class _CreateGroupState extends State<CreateGroup> {
   //GET ARGUMENTS
   var tagName = Get.arguments;
 
-  privateGroups(
+  uploadGroups(
     currentUser,
     currentUserName,
   ) async {
     String downloadImage = await groupServices().uploadImage(bannerImage);
     String profileImageURL = await groupServices().uploadImage(profileImage);
-    groupServices()
-        .createPrivateGroup(groupName.text, groupBio.text, type, currentUser,
-            currentUserName, downloadImage, profileImageURL, tagName)
-        .whenComplete(() {
-      groupName.clear();
-      groupBio.clear();
-      setState(() {
-        profileImage = null;
-        bannerImage = null;
-        loading = false;
-      });
-      Get.offAll(MyHomePage());
-      showTopSnackBar(
-        context,
-        CustomSnackBar.success(
-          message: "Circle Created",
-        ),
-      );
-    });
-  }
-
-  publicGroups(currentUser, currentUserName) async {
-    String downloadImage = await groupServices().uploadImage(bannerImage);
-    String profileImageURL = await groupServices().uploadImage(profileImage);
-    groupServices()
-        .createPublicGroup(groupName.text, groupBio.text, type, currentUser,
-            currentUserName, downloadImage, profileImageURL, tagName)
-        .whenComplete(() {
-      groupName.clear();
-      groupBio.clear();
-      setState(() {
-        bannerImage = null;
-        profileImage = null;
-        loading = false;
-      });
-      Get.offAll(MyHomePage());
-      showTopSnackBar(
-        context,
-        CustomSnackBar.success(
-          message: "Circle Created",
-        ),
-      );
-    });
-  }
-
-  reset() {
-    HapticFeedback.mediumImpact();
+    if (type == "PRIVATE") {
+      groupServices().createPrivateGroup(
+          groupName.text,
+          groupBio.text,
+          type,
+          currentUser,
+          currentUserName,
+          downloadImage,
+          profileImageURL,
+          tagName);
+    } else {
+      groupServices().createPublicGroup(
+          groupName.text,
+          groupBio.text,
+          type,
+          currentUser,
+          currentUserName,
+          downloadImage,
+          profileImageURL,
+          tagName);
+    }
     groupName.clear();
     groupBio.clear();
     setState(() {
-      bannerImage = null;
       profileImage = null;
+      bannerImage = null;
+      loading = false;
     });
     Get.offAll(MyHomePage());
+    showTopSnackBar(
+      context,
+      CustomSnackBar.success(
+        message: "Circle Created",
+      ),
+    );
   }
 
   Future pickImage(int type) async {

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_app/Widget/auth.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -16,10 +15,9 @@ class groupServices {
       "groupName": groupName,
       "groupBio": groupBio,
       "groupType": groupType,
-      "groupImage": profileImage ??
-          "https://i.pinimg.com/originals/76/94/84/769484dafbe89bf2b8a22379658956c4.jpg",
-      "groupBanner": bannerImage ??
-          "https://www.mub.eps.manchester.ac.uk/graphene/wp-content/themes/uom-theme/assets/images/default-banner.jpg",
+      "TimeStamp": Timestamp.now(),
+      "groupImage": profileImage,
+      "groupBanner": bannerImage,
       "groupAdmin": groupAdmin,
       "groupAdminName": groupAdminName,
       "members": [],
@@ -39,6 +37,7 @@ class groupServices {
         "groupName": groupName,
         "groupBio": groupBio,
         "groupType": groupType,
+        "TimeStamp": Timestamp.now(),
         "groupImage": profileImage,
         "groupBanner": bannerImage,
         "groupAdmin": currentUser,
@@ -60,5 +59,12 @@ class groupServices {
         .putFile(mImageFile);
     TaskSnapshot storageTaskSnapshot = await mStorageUploadTask;
     return await storageTaskSnapshot.ref.getDownloadURL();
+  }
+
+  Stream<QuerySnapshot> getPublicGroups(context) async* {
+    yield* FirebaseFirestore.instance
+        .collection("publicGroups")
+        .orderBy('TimeStamp', descending: true)
+        .snapshots();
   }
 }

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserModel {
   String name;
   String email;
@@ -22,10 +20,4 @@ class UserModel {
         'profileImage': profileImage,
         'status': status,
       };
-
-  // UserModel.fromSnapshot(DocumentSnapshot snapshot)
-  //     : name = snapshot.data()["name"],
-  //       email = snapshot.data()["email"],
-  //       uid = snapshot.data()["uid"],
-  //       profileImage = snapshot.data()["profileImage"];
 }

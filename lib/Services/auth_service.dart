@@ -5,8 +5,8 @@ import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Widget/auth.dart';
 
 class AuthService {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Checking app state (User logged in or logged Out?)
   // Stream<String> get onAuthStateChange => _firebaseAuth.authStateChanges().map(

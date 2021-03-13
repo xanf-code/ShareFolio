@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_app/Models/groups.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Widget/auth.dart';
 
@@ -37,8 +38,6 @@ class FirebaseService {
         .snapshots()
         .map(_userDataFromSnapshot);
   }
-
-  // USER SEARCH
 
   // List<UserModel> _userListFromQuerySnapshot(QuerySnapshot snapshot) {
   //   return snapshot.docs.map((doc) {
