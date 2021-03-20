@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
-import 'package:my_app/Widget/auth.dart';
-import 'package:my_app/Pages/Wrapper/wrapper.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:my_app/State/authentication.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -13,12 +11,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController _fullNameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
-
-  String _error;
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +24,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 35),
+              const Padding(
+                padding: EdgeInsets.only(left: 35),
                 child: Level1Form(
                   type: "Sign up",
                 ),
               ), // Heading
-              Level2Form(
+              const Level2Form(
                 type: "Sign up with the following options.",
               ), // Text
               FieldWidget(
@@ -45,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _fullNameController,
                 isObscure: false,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               FieldWidget(
@@ -54,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _emailController,
                 isObscure: false,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               FieldWidget(
@@ -63,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _passwordController,
                 isObscure: true,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               FieldWidget(
@@ -72,15 +68,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _confirmPasswordController,
                 isObscure: true,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  signUp();
+                  Provider.of<Authentication>(context, listen: false).signUp(
+                      _passwordController,
+                      _confirmPasswordController,
+                      _emailController,
+                      _fullNameController,
+                      context);
                 },
-                child: ButtonContainer(
+                child: const ButtonContainer(
                   type: "Sign up",
                 ),
               ),
@@ -94,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       (route) => false);
                 },
-                child: BottomText(
+                child: const BottomText(
                   text1: "Already have an account? ",
                   text2: " Log in",
                 ),
@@ -104,41 +105,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-  }
-
-  void signUp() async {
-    try {
-      final auth = Providers.of(context).auth;
-      if (_passwordController.text == _confirmPasswordController.text) {
-        await auth.createUserWithEmailAndPassword(_emailController.text.trim(),
-            _passwordController.text.trim(), _fullNameController.text, context);
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Wrapper(),
-            ),
-            (route) => false);
-      } else if (_passwordController.text != _confirmPasswordController.text) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(
-            message: "Passwords should match",
-          ),
-        );
-      }
-    } catch (e) {
-      setState(() {
-        _error = e.message;
-        print(_error);
-      });
-      if (_error != null) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(
-            message: _error,
-          ),
-        );
-      }
-    }
   }
 }

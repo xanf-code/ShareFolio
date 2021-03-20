@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/Pages/HomePage/Settings/levels/settings_widget_main.dart';
+import 'package:my_app/Services/auth_service.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -22,16 +25,32 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
       ),
-      child: Center(
-        child: Text(
-          "Settings",
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+      child: ListView(
+        children: [
+          level1_profile(),
+          Center(
+            child: OutlinedButton(
+              onPressed: () {
+                HapticFeedback.mediumImpact();
+                signOut(context);
+              },
+              child: const Text(
+                "Sign Out",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
+  }
+
+  void signOut(context) {
+    try {
+      final auth = AuthService();
+      auth.signOut();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

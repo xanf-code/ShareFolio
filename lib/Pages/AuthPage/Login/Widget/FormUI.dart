@@ -1,32 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Level3Form extends StatelessWidget {
-  const Level3Form({
+class Level3 extends StatelessWidget {
+  final IconData icon;
+  const Level3({
     Key key,
+    this.icon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.all(30.0),
-      padding: const EdgeInsets.only(
-        top: 20.0,
-        bottom: 20,
-      ),
-      decoration: BoxDecoration(
-        color: Color(0xFF101010),
-        border: Border.all(
-          color: Color(0xFF212121),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2.2,
+        margin: const EdgeInsets.only(
+          top: 30.0,
+          bottom: 30,
+          //left: 12,
         ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Icon(
-        FontAwesomeIcons.google,
-        color: Colors.white,
+        padding: const EdgeInsets.only(
+          top: 20.0,
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFF101010),
+          border: Border.all(
+            color: const Color(0xFF212121),
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Icon(
+          icon,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -96,7 +104,6 @@ class FieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -126,21 +133,20 @@ class FieldWidget extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.start,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle:
                   GoogleFonts.dmSans(fontSize: 16, color: Colors.white54),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 2,
                   style: BorderStyle.none,
                 ),
               ),
               filled: true,
-              fillColor: Color(0xFF171717),
-              contentPadding: EdgeInsets.all(25),
+              fillColor: const Color(0xFF171717),
+              contentPadding: const EdgeInsets.all(25),
             ),
           ),
         ),
@@ -166,7 +172,7 @@ class ButtonContainer extends StatelessWidget {
         height: 75,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             stops: [0.1, 0.5],
@@ -202,7 +208,6 @@ class BottomText extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             text1,

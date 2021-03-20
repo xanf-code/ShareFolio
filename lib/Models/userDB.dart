@@ -3,21 +3,13 @@ class UserModel {
   String email;
   String uid;
   String profileImage;
-  String status;
+  String ref_link;
 
   UserModel({
     this.name,
     this.email,
     this.uid,
     this.profileImage,
-    this.status,
+    this.ref_link,
   });
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'email': email,
-        'uid': uid,
-        'profileImage': profileImage,
-        'status': status,
-      };
 }

@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_app/Models/groups.dart';
 import 'package:my_app/Models/userDB.dart';
-import 'package:my_app/Widget/auth.dart';
 
 class FirebaseService {
   final String uid;
@@ -14,7 +12,7 @@ class FirebaseService {
       "email": email,
       "uid": uid,
       'profileImage': photoURL ?? " ",
-      "status": " ",
+      "ref_link": " ",
     });
   }
 
@@ -26,7 +24,7 @@ class FirebaseService {
             name: snapshot.data()['name'],
             email: snapshot.data()["email"],
             profileImage: snapshot.data()["profileImage"],
-            status: snapshot.data()["status"])
+            ref_link: snapshot.data()["ref_link"])
         : null;
   }
 

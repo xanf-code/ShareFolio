@@ -36,26 +36,21 @@ dependencies:
   uuid: ^3.0.1
   top_snackbar_flutter: ^0.0.3
   cached_network_image: ^2.5.1
-  avatar_glow:
   flutter_feather_icons: ^1.0.3
   floating_navbar:
     git:
       url: https://github.com/xanf-code/floating_navbar.git
-  intl:
-  pop_bottom_menu: ^1.0.0
   fluttertoast: ^7.1.6
   connectivity: ^3.0.2
-  image_picker: ^0.7.2+1
-  firebase_storage: ^8.0.0
   flutter_spinkit: ^4.1.2
   shared_preferences: ^2.0.4
-  get: ^3.26.0
-  slider_button: ^0.6.0
-  timeago: ^3.0.2
+  firebase_dynamic_links: ^0.8.0
+  flutter_login_facebook: ^1.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

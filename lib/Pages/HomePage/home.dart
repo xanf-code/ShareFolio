@@ -1,9 +1,9 @@
 import 'package:floating_navbar/floating_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:my_app/Pages/HomePage/MainHome/home_page.dart';
 import 'package:my_app/Pages/HomePage/SearchPage/search.dart';
 import 'package:my_app/Pages/HomePage/Settings/settings.dart';
-import 'package:my_app/Pages/HomePage/Widget/homepage_home.dart';
 import 'package:my_app/Services/GeneralFunctions/functions.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Widget> _widgetOptions = <Widget>[
-    HomeWidget(),
+    HomePage(),
     SearchPage(),
     SettingsPage(),
   ];

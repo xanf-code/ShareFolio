@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
-import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
-import 'package:my_app/Services/firebase_services/services.dart';
-import 'package:my_app/Widget/auth.dart';
-import 'package:my_app/Pages/Wrapper/wrapper.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:my_app/State/authentication.dart';
+import 'package:provider/provider.dart';
+import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -16,9 +14,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  String _error;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +24,50 @@ class _LoginFormState extends State<LoginForm> {
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 35),
+              const Padding(
+                padding: EdgeInsets.only(left: 35),
                 child: Level1Form(
                   type: "Log In",
                 ),
               ), // Heading
-              Level2Form(
+              const Level2Form(
                 type: "Log in with one of the following options.",
               ), // Text
-              GestureDetector(
-                onTap: () {
-                  HapticFeedback.mediumImpact();
-                  googleSignIn();
-                },
-                child: Level3Form(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      HapticFeedback.mediumImpact();
+                      Provider.of<Authentication>(context, listen: false)
+                          .googleSignIn(context);
+                    },
+                    child: const Level3(
+                      icon: FontAwesomeIcons.google,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      HapticFeedback.mediumImpact();
+                      Provider.of<Authentication>(context, listen: false)
+                          .facebook(context);
+                    },
+                    child: const Level3(
+                      icon: FontAwesomeIcons.facebook,
+                    ),
+                  ),
+                ],
               ),
+
               FieldWidget(
                 label: "Email",
                 hint: 'john@example.com',
                 controller: _emailController,
                 isObscure: false,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               FieldWidget(
@@ -86,15 +101,16 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  signIn();
+                  Provider.of<Authentication>(context, listen: false)
+                      .signIn(_emailController, _passwordController, context);
                 },
-                child: ButtonContainer(
+                child: const ButtonContainer(
                   type: "Log in",
                 ),
               ),
@@ -109,7 +125,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       (route) => false);
                 },
-                child: BottomText(
+                child: const BottomText(
                   text1: "Dont have an account? ",
                   text2: " Sign up",
                 ),
@@ -119,67 +135,5 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
-  }
-
-  void signIn() async {
-    try {
-      final auth = Providers.of(context).auth;
-      await auth.signInWithEmailAndPassword(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
-      );
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Wrapper(),
-          ),
-          (route) => false);
-    } catch (e) {
-      setState(() {
-        _error = e.message;
-        print(_error);
-      });
-      if (_error != null) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(
-            message: _error,
-          ),
-        );
-      }
-    }
-  }
-
-  void googleSignIn() async {
-    try {
-      final auth = Providers.of(context).auth;
-      await auth.signInWithGoogle(context);
-      FirebaseService().createUserDatabase(
-          context,
-          Providers.of(context).auth.getCurrentUserName(),
-          Providers.of(context).auth.getCurrentUserEmail(),
-          Providers.of(context).auth.getCurrentUserUID(),
-          Providers.of(context).auth.getCurrentUserPic(),
-          Providers.of(context).auth.getCurrentUserUID());
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Wrapper(),
-          ),
-          (route) => false);
-    } catch (e) {
-      setState(() {
-        _error = e.message;
-        print(_error);
-      });
-      if (_error != null) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(
-            message: _error,
-          ),
-        );
-      }
-    }
   }
 }

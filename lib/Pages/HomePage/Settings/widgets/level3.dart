@@ -123,7 +123,7 @@ class level3 extends StatelessWidget {
                           dynamicLinkService.generateLink(
                               authService.getCurrentUserUID(), context);
                         },
-                        child: const Text("Generate Link"),
+                        child: const Text("Show Link"),
                       ),
                     ),
                   ],
