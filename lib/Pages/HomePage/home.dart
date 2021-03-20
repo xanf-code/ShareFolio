@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:my_app/Pages/HomePage/SearchPage/search.dart';
 import 'package:my_app/Pages/HomePage/Settings/settings.dart';
+import 'package:my_app/Pages/HomePage/Widget/homepage_home.dart';
 import 'package:my_app/Services/GeneralFunctions/functions.dart';
-import 'Widget/HomePage_home.dart';
 
 class MyHomePage extends StatefulWidget {
   @override

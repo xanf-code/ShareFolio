@@ -6,7 +6,7 @@ import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Widget/auth.dart';
-import 'package:my_app/main.dart';
+import 'package:my_app/Pages/Wrapper/wrapper.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 

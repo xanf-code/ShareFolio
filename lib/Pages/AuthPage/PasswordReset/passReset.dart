@@ -6,7 +6,7 @@ import 'package:my_app/Widget/auth.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import '../../../main.dart';
+import 'package:my_app/Pages/Wrapper/wrapper.dart';
 
 class PassReset extends StatefulWidget {
   @override
