@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
@@ -8,12 +9,12 @@ import 'package:my_app/State/authentication.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -79,11 +80,8 @@ class _LoginFormState extends State<LoginForm> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PassReset(),
-                    ),
+                  Get.to(
+                    PassReset(),
                   );
                 },
                 child: Padding(
@@ -117,13 +115,9 @@ class _LoginFormState extends State<LoginForm> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (context) => SignUpScreen(),
-                      ),
-                      (route) => false);
+                  Get.offAll(
+                    () => SignUpScreen(),
+                  );
                 },
                 child: const BottomText(
                   text1: "Dont have an account? ",

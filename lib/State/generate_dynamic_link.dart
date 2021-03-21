@@ -11,10 +11,14 @@ class GenerateLink extends ChangeNotifier {
   final DynamicLinkService _dynamicLinkService = DynamicLinkService();
   final AuthService _authService = AuthService();
 
-  Future<String> generateLink(userID, BuildContext context) async {
+  Future<String> generateLink(String userID, BuildContext context, String title,
+      String desc, String image) async {
     try {
       _link = await _dynamicLinkService.createUserLink(
         _authService.getCurrentUserUID(),
+        title,
+        desc,
+        image,
       );
       if (_link != null) {
         FirebaseFirestore.instance

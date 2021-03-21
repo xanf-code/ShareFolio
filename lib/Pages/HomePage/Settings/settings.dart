@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/HomePage/Settings/levels/settings_widget_main.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 
@@ -27,15 +28,34 @@ class _SettingsPageState extends State<SettingsPage> {
       child: ListView(
         children: [
           level1_profile(),
-          Center(
-            child: OutlinedButton(
-              onPressed: () {
-                HapticFeedback.mediumImpact();
-                signOut(context);
-              },
-              child: const Text(
-                "Sign Out",
-                style: TextStyle(color: Colors.white),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              signOut(context);
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 25.0,
+                top: 25,
+                right: 25,
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 65,
+                decoration: BoxDecoration(
+                  color: Color(0xFF272732),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    "Sign Out",
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

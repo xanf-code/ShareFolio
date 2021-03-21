@@ -3,6 +3,7 @@ import 'package:my_app/Pages/HomePage/Settings/widgets/level1.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level2.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level3.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level4.dart';
+import 'package:my_app/Pages/HomePage/Settings/widgets/level5.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 
@@ -23,14 +24,15 @@ class level1_profile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const level1(), //
-          level2(authService: _authService),
-          level3(
+          Level2(authService: _authService),
+          Level3(
             authService: _authService,
             dynamicLinkService: _dynamicLinkService,
           ),
-          level4(
+          Level4(
             authService: _authService,
           ),
+          Level5(),
         ],
       ),
     );

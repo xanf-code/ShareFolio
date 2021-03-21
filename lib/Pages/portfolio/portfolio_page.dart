@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/Widget/const_gradient.dart';
+import 'package:my_app/Widget/constants.dart';
 
 class ShareFolioPage extends StatelessWidget {
   final String uid;
@@ -12,7 +12,7 @@ class ShareFolioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: pageGradient,
         ),
         child: StreamBuilder(
@@ -21,7 +21,7 @@ class ShareFolioPage extends StatelessWidget {
               .doc(uid)
               .snapshots(),
           builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            var userDocument = snapshot.data;
+            final userDocument = snapshot.data;
             if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -30,13 +30,13 @@ class ShareFolioPage extends StatelessWidget {
             return ListView(
               children: [
                 Text(
-                  userDocument["name"],
+                  userDocument["name"].toString(),
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                   ),
                 ),
                 Text(
-                  userDocument["email"],
+                  userDocument["email"].toString(),
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                   ),

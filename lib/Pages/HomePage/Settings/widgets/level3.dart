@@ -1,17 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
+import 'package:share/share.dart';
 
-class level3 extends StatelessWidget {
+class Level3 extends StatelessWidget {
   final AuthService authService;
   final GenerateLink dynamicLinkService;
 
-  const level3({Key key, this.authService, this.dynamicLinkService})
+  const Level3({Key key, this.authService, this.dynamicLinkService})
       : super(key: key);
 
   @override
@@ -22,10 +24,13 @@ class level3 extends StatelessWidget {
           .doc(authService.getCurrentUserUID())
           .snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        var userDocument = snapshot.data;
+        final userDocument = snapshot.data;
         if (!snapshot.hasData) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: SpinKitThreeBounce(
+              color: Colors.white,
+              size: 18,
+            ),
           );
         }
         return userDocument["ref_link"] != " "
@@ -38,11 +43,23 @@ class level3 extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "ShareFolio Link",
-                      style: GoogleFonts.poppins(
-                        color: const Color(0xFFBB86FC),
-                      ),
+                    Row(
+                      children: [
+                        const Icon(
+                          FeatherIcons.link,
+                          color: Colors.blue,
+                          size: 14,
+                        ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Text(
+                          "ShareFolio Link",
+                          style: GoogleFonts.poppins(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 6,
@@ -72,24 +89,14 @@ class level3 extends StatelessWidget {
                           ),
                           IconButton(
                             icon: const Icon(
-                              FontAwesomeIcons.copy,
+                              FontAwesomeIcons.link,
                               color: Colors.white,
                               size: 18,
                             ),
                             onPressed: () {
                               HapticFeedback.mediumImpact();
-                              Clipboard.setData(
-                                ClipboardData(
-                                  text: userDocument['ref_link'].toString(),
-                                ),
-                              ).whenComplete(
-                                () {
-                                  Fluttertoast.showToast(
-                                    msg: "copied to clipboard",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                  );
-                                },
+                              Share.share(
+                                "Check out my ShareFolio profile ${userDocument['ref_link'].toString()}",
                               );
                             },
                           ),
@@ -121,7 +128,14 @@ class level3 extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {
                           dynamicLinkService.generateLink(
-                              authService.getCurrentUserUID(), context);
+                            authService.getCurrentUserUID(),
+                            context,
+                            "${userDocument['name']} | ShareFolio",
+                            "${userDocument['name']}(@${userDocument['name']}) | ShareFolio- Personal Profile Link",
+                            userDocument['profileImage'].toString() == " "
+                                ? "https://via.placeholder.com/150"
+                                : userDocument['profileImage'].toString(),
+                          );
                         },
                         child: const Text("Show Link"),
                       ),

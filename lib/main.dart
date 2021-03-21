@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:my_app/Models/userDB.dart';
+import 'package:my_app/Pages/HomePage/Settings/settings.dart';
 import 'package:my_app/Pages/Onbarding/onboarding.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/authentication.dart';
+import 'package:my_app/State/function_states.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
@@ -35,6 +37,9 @@ class MyApp extends StatelessWidget {
         Provider<Authentication>(
           create: (_) => Authentication(),
         ),
+        Provider<FirebaseFunctions>(
+          create: (_) => FirebaseFunctions(),
+        ),
       ],
       child: StreamProvider<UserModel>.value(
         value: AuthService().user,
@@ -43,6 +48,7 @@ class MyApp extends StatelessWidget {
           home: initScreen == 0 || initScreen == null
               ? OnBoarding()
               : const Wrapper(),
+          //: Material(child: SettingsPage()),
         ),
       ),
     );

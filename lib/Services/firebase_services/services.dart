@@ -1,12 +1,22 @@
+import 'dart:collection';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:my_app/Models/userDB.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
+import 'package:my_app/Services/utils/image_utils.dart';
 
 class FirebaseService {
   final String uid;
+  final UtilsService _utilsService = UtilsService();
+  final AuthService _authService = AuthService();
 
   FirebaseService({this.uid});
 
-  Future createUserDatabase(context, name, email, uid, photoURL, docUID) async {
+  Future createUserDatabase(BuildContext context, String name, String email,
+      String uid, String photoURL, String docUID) async {
     await FirebaseFirestore.instance.collection("users").doc(docUID).set({
       "name": name,
       "email": email,
@@ -21,10 +31,11 @@ class FirebaseService {
     return snapshot != null
         ? UserModel(
             uid: uid,
-            name: snapshot.data()['name'],
-            email: snapshot.data()["email"],
-            profileImage: snapshot.data()["profileImage"],
-            ref_link: snapshot.data()["ref_link"])
+            name: snapshot.data()['name'].toString(),
+            email: snapshot.data()["email"].toString(),
+            profileImage: snapshot.data()["profileImage"].toString(),
+            ref_link: snapshot.data()["ref_link"].toString(),
+          )
         : null;
   }
 
@@ -37,25 +48,29 @@ class FirebaseService {
         .map(_userDataFromSnapshot);
   }
 
-  // List<UserModel> _userListFromQuerySnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     return UserModel(
-  //       uid: doc.id,
-  //       name: doc.data()['name'] ?? '',
-  //       profileImage: doc.data()['profileImage'] ?? '',
-  //       email: doc.data()['email'] ?? '',
-  //     );
-  //   }).toList();
-  // }
-  //
-  // Stream<List<UserModel>> queryByName(search) {
-  //   return FirebaseFirestore.instance
-  //       .collection("users")
-  //       .orderBy("name")
-  //       .startAt([search])
-  //       .endAt([search + '\uf8ff'])
-  //       .limit(10)
-  //       .snapshots()
-  //       .map(_userListFromQuerySnapshot);
-  // }
+  Future updateUserName(String docUID, String name) async {
+    await FirebaseFirestore.instance.collection("users").doc(docUID).update({
+      "name": name,
+    });
+  }
+
+  Future<void> updateProfile(File _profileImage) async {
+    String profileImage = '';
+
+    if (_profileImage != null) {
+      profileImage = await _utilsService.uploadFile(_profileImage,
+          'user/profile/${FirebaseAuth.instance.currentUser.uid}/profile');
+    }
+
+    final Map<String, Object> data = HashMap();
+
+    data['profileImage'] = profileImage;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_authService.getCurrentUserUID())
+        .update(data);
+
+    Get.back();
+  }
 }

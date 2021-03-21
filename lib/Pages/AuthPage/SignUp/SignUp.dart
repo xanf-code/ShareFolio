@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/Pages/AuthPage/Login/login.dart';
 import 'package:my_app/State/authentication.dart';
@@ -88,12 +89,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginForm(),
-                      ),
-                      (route) => false);
+                  Get.offAll(
+                    () => LoginScreen(),
+                  );
                 },
                 child: const BottomText(
                   text1: "Already have an account? ",

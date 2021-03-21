@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
-import 'package:provider/provider.dart';
 
 class AuthService {
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Checking app state (User logged in or logged Out?)
   // Stream<String> get onAuthStateChange => _firebaseAuth.authStateChanges().map(
@@ -23,7 +23,7 @@ class AuthService {
 
   // GET UID
   String getCurrentUserUID() {
-    String currentUserID = _firebaseAuth.currentUser.uid;
+    final String currentUserID = _firebaseAuth.currentUser.uid;
     return currentUserID;
   }
 
@@ -44,11 +44,11 @@ class AuthService {
 
   // Email and Pass Sign up
   Future<String> createUserWithEmailAndPassword(
-      String email, String password, String name, context) async {
+      String email, String password, String name, BuildContext context) async {
     final currentUser = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
 
-    User firebaseUser = currentUser.user;
+    final User firebaseUser = currentUser.user;
     await firebaseUser.updateProfile(displayName: name);
 
     FirebaseService().createUserDatabase(context, name, email, firebaseUser.uid,
@@ -80,7 +80,7 @@ class AuthService {
   }
 
   // Google Sign-In
-  Future<String> signInWithGoogle(context) async {
+  Future<String> signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount account = await _googleSignIn.signIn();
     final GoogleSignInAuthentication _googleAuth = await account.authentication;
     //final GoogleSignInAccount gCurrentUser = _googleSignIn.currentUser;

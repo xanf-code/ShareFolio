@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
 import 'package:my_app/State/authentication.dart';
 import 'package:provider/provider.dart';
@@ -27,22 +28,23 @@ class _PassResetState extends State<PassReset> {
                 child: Row(
                   children: [
                     Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: const Color(0xFF212121),
-                          ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: const Color(0xFF212121),
                         ),
-                        child: IconButton(
-                          icon: const Icon(
-                            CupertinoIcons.back,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.mediumImpact();
-                            Navigator.pop(context);
-                          },
-                        )),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          CupertinoIcons.back,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          HapticFeedback.mediumImpact();
+                          Get.back();
+                        },
+                      ),
+                    ),
                     const SizedBox(
                       width: 14,
                     ),

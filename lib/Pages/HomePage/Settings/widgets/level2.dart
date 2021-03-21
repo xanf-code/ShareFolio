@@ -1,11 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/Pages/HomePage/Settings/EditPage/edit_image.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 
-class level2 extends StatelessWidget {
-  const level2({
+class Level2 extends StatelessWidget {
+  const Level2({
     Key key,
     @required AuthService authService,
   })  : _authService = authService,
@@ -26,20 +30,32 @@ class level2 extends StatelessWidget {
             .doc(_authService.getCurrentUserUID())
             .snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          var userDocument = snapshot.data;
+          final userDocument = snapshot.data;
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitThreeBounce(
+                color: Colors.white,
+                size: 18,
+              ),
             );
           }
           return Row(
             children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundImage: CachedNetworkImageProvider(
-                  userDocument["profileImage"] == " "
-                      ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
-                      : userDocument["profileImage"],
+              GestureDetector(
+                onTap: () {
+                  HapticFeedback.mediumImpact();
+                  Get.to(
+                    () => EditImage(),
+                    fullscreenDialog: true,
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: CachedNetworkImageProvider(
+                    userDocument["profileImage"].toString() == " "
+                        ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+                        : userDocument["profileImage"].toString(),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -49,7 +65,7 @@ class level2 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userDocument["name"],
+                    userDocument["name"].toString(),
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
@@ -57,7 +73,7 @@ class level2 extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    userDocument["email"],
+                    userDocument["email"].toString(),
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w300,
                       fontSize: 16,

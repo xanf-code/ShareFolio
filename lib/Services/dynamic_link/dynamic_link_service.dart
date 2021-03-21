@@ -20,7 +20,8 @@ class DynamicLinkService {
     });
   }
 
-  Future<String> createUserLink(String userID) async {
+  Future<String> createUserLink(
+      String userID, String title, String description, String imageURL) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: "https://sfolio.page.link",
       link: Uri.parse(
@@ -29,11 +30,15 @@ class DynamicLinkService {
       androidParameters: AndroidParameters(
         packageName: "com.dglt.my_app",
       ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+        title: title,
+        description: description,
+        imageUrl: Uri.parse(imageURL),
+      ),
     );
-
-    final Uri dynamicUrl = await parameters.buildUrl();
-
-    return dynamicUrl.toString();
+    final ShortDynamicLink shortDynamicLink = await parameters.buildShortLink();
+    final Uri shortUrl = shortDynamicLink.shortUrl;
+    return shortUrl.toString();
   }
 
   void _handleDynamicLink(PendingDynamicLinkData data) {

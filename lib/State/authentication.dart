@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+import 'package:get/get.dart';
 import 'package:my_app/Pages/Wrapper/wrapper.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
@@ -18,12 +19,9 @@ class Authentication extends ChangeNotifier {
         _emailController.text.trim().toString(),
         _passwordController.text.trim().toString(),
       );
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Wrapper(),
-          ),
-          (route) => false);
+      Get.off(
+        () => const Wrapper(),
+      );
     } catch (error) {
       _error = error.message.toString();
 
@@ -51,12 +49,9 @@ class Authentication extends ChangeNotifier {
           auth.getCurrentUserUID(),
           auth.getCurrentUserPic(),
           auth.getCurrentUserUID());
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Wrapper(),
-          ),
-          (route) => false);
+      Get.off(
+        () => const Wrapper(),
+      );
     } catch (e) {
       _error = e.message.toString();
       if (_error != null) {
@@ -82,12 +77,8 @@ class Authentication extends ChangeNotifier {
             _passwordController.text.trim().toString(),
             _fullNameController.text.toString().trim(),
             context);
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Wrapper(),
-          ),
-          (route) => false,
+        Get.off(
+          () => const Wrapper(),
         );
       } else if (_passwordController.text != _confirmPasswordController.text) {
         showTopSnackBar(
@@ -125,12 +116,9 @@ class Authentication extends ChangeNotifier {
           message: "A password reset link has been sent to ${_resetPass.text}",
         ),
       );
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Wrapper(),
-          ),
-          (route) => false);
+      Get.off(
+        () => const Wrapper(),
+      );
     } catch (e) {
       _error = e.message.toString();
 
