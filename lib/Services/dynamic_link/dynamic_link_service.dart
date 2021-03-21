@@ -1,5 +1,9 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_app/Pages/portfolio/portfolio_page.dart';
 
 class DynamicLinkService {
   Future handleDynamicLinks() async {
@@ -42,6 +46,11 @@ class DynamicLinkService {
         final userID = deepLink.queryParameters['user'];
 
         if (userID != null) {
+          Get.to(
+            ShareFolioPage(
+              uid: userID,
+            ),
+          );
           debugPrint(userID);
         }
       }

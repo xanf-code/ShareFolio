@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
-import 'package:my_app/Widget/auth.dart';
+import 'package:provider/provider.dart';
 
 class AuthService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -19,11 +19,6 @@ class AuthService {
 
   Stream<UserModel> get user {
     return FirebaseAuth.instance.authStateChanges().map(_userFromFirebaseUser);
-  }
-
-  // GET CURRENT USER
-  Future getCurrentUser() async {
-    return _firebaseAuth.currentUser;
   }
 
   // GET UID
@@ -57,7 +52,7 @@ class AuthService {
     await firebaseUser.updateProfile(displayName: name);
 
     FirebaseService().createUserDatabase(context, name, email, firebaseUser.uid,
-        firebaseUser.photoURL, Providers.of(context).auth.getCurrentUserUID());
+        firebaseUser.photoURL, AuthService().getCurrentUserUID());
     await firebaseUser.reload();
 
     return firebaseUser.uid;

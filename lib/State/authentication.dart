@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:my_app/Pages/Wrapper/wrapper.dart';
-import 'package:my_app/Services/auth_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -44,28 +44,19 @@ class Authentication extends ChangeNotifier {
     try {
       final auth = AuthService();
       await auth.signInWithGoogle(context);
-      if (auth.user == null) {
-        FirebaseService().createUserDatabase(
-            context,
-            auth.getCurrentUserName(),
-            auth.getCurrentUserEmail(),
-            auth.getCurrentUserUID(),
-            auth.getCurrentUserPic(),
-            auth.getCurrentUserUID());
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Wrapper(),
-            ),
-            (route) => false);
-      } else {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Wrapper(),
-            ),
-            (route) => false);
-      }
+      FirebaseService().createUserDatabase(
+          context,
+          auth.getCurrentUserName(),
+          auth.getCurrentUserEmail(),
+          auth.getCurrentUserUID(),
+          auth.getCurrentUserPic(),
+          auth.getCurrentUserUID());
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Wrapper(),
+          ),
+          (route) => false);
     } catch (e) {
       _error = e.message.toString();
       if (_error != null) {

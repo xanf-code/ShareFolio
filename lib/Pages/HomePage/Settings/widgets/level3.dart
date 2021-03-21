@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/Services/auth_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 
 class level3 extends StatelessWidget {

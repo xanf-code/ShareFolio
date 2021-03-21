@@ -3,7 +3,7 @@ import 'package:my_app/Pages/HomePage/Settings/widgets/level1.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level2.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level3.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level4.dart';
-import 'package:my_app/Services/auth_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 
 // ignore: camel_case_types

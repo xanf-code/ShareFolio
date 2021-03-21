@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/Services/auth_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 
 class level4 extends StatelessWidget {
   final AuthService authService;
@@ -45,6 +45,7 @@ class level4 extends StatelessWidget {
                   title: "Display Name",
                   title_text: authService.getCurrentUserName(),
                   button: "Edit",
+                  visibility: true,
                 ),
               ),
               GestureDetector(
@@ -57,6 +58,7 @@ class level4 extends StatelessWidget {
                   title: "Email",
                   title_text: authService.getCurrentUserEmail(),
                   button: "Edit",
+                  visibility: false,
                 ),
               ),
               GestureDetector(
@@ -69,6 +71,7 @@ class level4 extends StatelessWidget {
                   title: "Password",
                   title_text: "•••••••••••",
                   button: "Change",
+                  visibility: true,
                 ),
               ),
             ],
@@ -85,11 +88,12 @@ class menu_items extends StatelessWidget {
     this.title,
     this.title_text,
     this.button,
+    this.visibility,
   }) : super(key: key);
   final String title;
   final String title_text;
   final String button;
-
+  final bool visibility;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -123,24 +127,27 @@ class menu_items extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            height: 40,
-            //width: 75,
-            decoration: BoxDecoration(
-              color: const Color(0xFF414052),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20.0,
-                  right: 20,
-                ),
-                child: Text(
-                  button,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+          Visibility(
+            visible: visibility,
+            child: Container(
+              height: 40,
+              //width: 75,
+              decoration: BoxDecoration(
+                color: const Color(0xFF414052),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 20,
+                  ),
+                  child: Text(
+                    button,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

@@ -1,14 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:my_app/Models/userDB.dart';
 import 'package:my_app/Pages/Onbarding/onboarding.dart';
-import 'package:my_app/Services/auth_service.dart';
-import 'package:my_app/Services/dynamic_link_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/authentication.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 import 'package:my_app/Pages/Wrapper/wrapper.dart';
+import 'Services/dynamic_link/dynamic_link_service.dart';
 
 int initScreen;
 
@@ -28,12 +29,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<GenerateLink>(create: (_) => GenerateLink()),
-        Provider<Authentication>(create: (_) => Authentication()),
+        Provider<GenerateLink>(
+          create: (_) => GenerateLink(),
+        ),
+        Provider<Authentication>(
+          create: (_) => Authentication(),
+        ),
       ],
       child: StreamProvider<UserModel>.value(
         value: AuthService().user,
-        child: MaterialApp(
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           home: initScreen == 0 || initScreen == null
               ? OnBoarding()

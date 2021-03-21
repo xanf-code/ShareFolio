@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/HomePage/Settings/levels/settings_widget_main.dart';
-import 'package:my_app/Services/auth_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

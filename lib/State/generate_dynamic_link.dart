@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app/Services/auth_service.dart';
-import 'package:my_app/Services/dynamic_link_service.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
+import 'package:my_app/Services/dynamic_link/dynamic_link_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 

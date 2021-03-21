@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
-import 'package:my_app/Widget/auth.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-import 'package:my_app/Pages/Wrapper/wrapper.dart';
+import 'package:my_app/State/authentication.dart';
+import 'package:provider/provider.dart';
 
 class PassReset extends StatefulWidget {
   @override
@@ -14,7 +11,7 @@ class PassReset extends StatefulWidget {
 }
 
 class _PassResetState extends State<PassReset> {
-  TextEditingController _resetPass = TextEditingController();
+  final TextEditingController _resetPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,6 @@ class _PassResetState extends State<PassReset> {
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -34,11 +30,11 @@ class _PassResetState extends State<PassReset> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Color(0xFF212121),
+                            color: const Color(0xFF212121),
                           ),
                         ),
                         child: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             CupertinoIcons.back,
                             color: Colors.white,
                           ),
@@ -47,16 +43,16 @@ class _PassResetState extends State<PassReset> {
                             Navigator.pop(context);
                           },
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 14,
                     ),
-                    Level1Form(
+                    const Level1Form(
                       type: "Reset Password",
                     ),
                   ],
                 ),
               ), // Heading
-              Level2Form(
+              const Level2Form(
                 type: "Enter your email associated with the account",
               ), // Text
               FieldWidget(
@@ -65,15 +61,16 @@ class _PassResetState extends State<PassReset> {
                 controller: _resetPass,
                 isObscure: false,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 14,
               ),
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  resetPass();
+                  Provider.of<Authentication>(context, listen: false)
+                      .resetPass(_resetPass, context);
                 },
-                child: ButtonContainer(
+                child: const ButtonContainer(
                   type: "Reset Password",
                 ),
               ),
@@ -82,39 +79,5 @@ class _PassResetState extends State<PassReset> {
         ),
       ),
     );
-  }
-
-  String _error;
-  void resetPass() async {
-    try {
-      final auth = Providers.of(context).auth;
-      await auth.sendPasswordResetEmail(
-        _resetPass.text.trim(),
-      );
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message: "A password reset link has been sent to ${_resetPass.text}",
-        ),
-      );
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Wrapper(),
-          ),
-          (route) => false);
-    } catch (e) {
-      setState(() {
-        _error = e.message;
-      });
-      if (_error != null) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.error(
-            message: _error,
-          ),
-        );
-      }
-    }
   }
 }
