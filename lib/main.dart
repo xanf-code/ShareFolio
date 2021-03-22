@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 import 'package:my_app/Pages/Wrapper/wrapper.dart';
+import 'Pages/HomePage/Settings/settings.dart';
 import 'Services/dynamic_link/dynamic_link_service.dart';
 
 int initScreen;

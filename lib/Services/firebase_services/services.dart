@@ -17,13 +17,17 @@ class FirebaseService {
 
   Future createUserDatabase(BuildContext context, String name, String email,
       String uid, String photoURL, String docUID) async {
-    await FirebaseFirestore.instance.collection("users").doc(docUID).set({
-      "name": name,
-      "email": email,
-      "uid": uid,
-      'profileImage': photoURL ?? " ",
-      "ref_link": " ",
-    });
+    final snapShot =
+        await FirebaseFirestore.instance.collection('users').doc(docUID).get();
+    if (!snapShot.exists) {
+      await FirebaseFirestore.instance.collection("users").doc(docUID).set({
+        "name": name,
+        "email": email,
+        "uid": uid,
+        'profileImage': photoURL ?? " ",
+        "ref_link": " ",
+      });
+    }
   }
 
   // user data from snapshots

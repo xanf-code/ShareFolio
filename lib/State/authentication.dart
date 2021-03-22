@@ -41,6 +41,7 @@ class Authentication extends ChangeNotifier {
   Future<String> googleSignIn(BuildContext context) async {
     try {
       final auth = AuthService();
+
       await auth.signInWithGoogle(context);
       FirebaseService().createUserDatabase(
           context,
@@ -138,6 +139,7 @@ class Authentication extends ChangeNotifier {
   Future<String> facebook(BuildContext context) async {
     try {
       final fb = FacebookLogin();
+
       final res = await fb.logIn(permissions: [
         FacebookPermission.publicProfile,
         FacebookPermission.email,

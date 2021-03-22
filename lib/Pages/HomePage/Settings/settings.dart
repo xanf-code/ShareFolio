@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/HomePage/Settings/levels/settings_widget_main.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
@@ -13,11 +14,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
           stops: [0.0, 1.0, 1.5],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
           colors: [
             Color(0xFF08051a),
             Color(0xFF07041b),
@@ -31,10 +30,10 @@ class _SettingsPageState extends State<SettingsPage> {
           GestureDetector(
             onTap: () {
               HapticFeedback.mediumImpact();
-              signOut(context);
+              showAlertDialog(context);
             },
             child: Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 25.0,
                 top: 25,
                 right: 25,
@@ -43,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 width: MediaQuery.of(context).size.width,
                 height: 65,
                 decoration: BoxDecoration(
-                  color: Color(0xFF272732),
+                  color: const Color(0xFF272732),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
@@ -64,12 +63,57 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void signOut(context) {
+  void signOut(BuildContext context) {
     try {
       final auth = AuthService();
       auth.signOut();
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  void showAlertDialog(BuildContext context) {
+    Widget OkButton = TextButton(
+      onPressed: () {
+        signOut(context);
+        Get.back();
+      },
+      child: const Text("OK"),
+    );
+    Widget Cancel_Button = TextButton(
+      onPressed: () {
+        Get.back();
+      },
+      child: const Text("CANCEL"),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: const Color(0xFF212121),
+      title: const Text(
+        "Log out",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      content: const Text(
+        "Are you sure? Logging out will remove all ShareFolio data from this device.",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      actions: [
+        OkButton,
+        Cancel_Button,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
