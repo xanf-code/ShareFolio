@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
-import 'package:my_app/Pages/AuthPage/SignUp/SignUp.dart';
+import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
+import 'package:my_app/Pages/AuthPage/SignUp/sign_up.dart';
 import 'package:my_app/State/authentication.dart';
 import 'package:provider/provider.dart';
-import 'package:my_app/Pages/AuthPage/PasswordReset/passReset.dart';
+import 'package:my_app/Pages/AuthPage/PasswordReset/pass_reset.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

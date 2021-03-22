@@ -29,8 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FloatingNavBar(
-        color: Color(0xff121212),
-        iconColor: Color(0xFFCF6679),
+        color: const Color(0xff121212),
+        iconColor: const Color(0xFFCF6679),
         hapticFeedback: true,
         horizontalPadding: MediaQuery.of(context).size.width / 8,
         pages: _widgetOptions,

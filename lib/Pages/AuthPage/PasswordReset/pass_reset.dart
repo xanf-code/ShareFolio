@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
+import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/State/authentication.dart';
 import 'package:provider/provider.dart';
 

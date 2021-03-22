@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_app/Pages/AuthPage/Login/Widget/FormUI.dart';
+import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/constants.dart';
@@ -29,13 +29,13 @@ class _EditUserNameState extends State<EditUserName> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: pageGradient,
         ),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                 left: 32.0,
                 top: 14,
                 bottom: 18,
@@ -56,14 +56,14 @@ class _EditUserNameState extends State<EditUserName> {
                 if (_editName.text.isEmpty || _editName.text == " ") {
                   showTopSnackBar(
                     context,
-                    CustomSnackBar.error(
+                    const CustomSnackBar.error(
                       message: "Field cannot be empty!",
                     ),
                   );
                 } else if (_editName.text.length >= 30) {
                   showTopSnackBar(
                     context,
-                    CustomSnackBar.error(
+                    const CustomSnackBar.error(
                       message: "Name too long!",
                     ),
                   );

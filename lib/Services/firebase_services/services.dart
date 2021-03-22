@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Models/userDB.dart';
+import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/utils/image_utils.dart';
 
