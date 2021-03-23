@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Padding(
               padding: const EdgeInsets.only(
                 left: 25.0,
-                top: 25,
+                top: 20,
                 right: 25,
               ),
               child: Container(

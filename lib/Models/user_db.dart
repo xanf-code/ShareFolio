@@ -4,6 +4,7 @@ class UserModel {
   String uid;
   String profileImage;
   String ref_link;
+  String audioLink;
 
   UserModel({
     this.name,
@@ -11,5 +12,6 @@ class UserModel {
     this.uid,
     this.profileImage,
     this.ref_link,
+    this.audioLink,
   });
 }

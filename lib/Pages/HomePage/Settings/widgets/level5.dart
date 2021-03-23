@@ -13,8 +13,8 @@ class Level5 extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: 25.0,
         right: 25,
-        top: 25,
-        bottom: 12,
+        top: 20,
+        //bottom: 12,
       ),
       child: Stack(
         children: [

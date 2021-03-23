@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
-import 'package:my_app/Services/utils/image_utils.dart';
+import 'package:my_app/Services/utils/upload_utils.dart';
 
 class FirebaseService {
   final String uid;
@@ -26,6 +26,7 @@ class FirebaseService {
         "uid": uid,
         'profileImage': photoURL ?? " ",
         "ref_link": " ",
+        "audioLink": " ",
       });
     }
   }
@@ -39,6 +40,7 @@ class FirebaseService {
             email: snapshot.data()["email"].toString(),
             profileImage: snapshot.data()["profileImage"].toString(),
             ref_link: snapshot.data()["ref_link"].toString(),
+            audioLink: snapshot.data()["audioLink"].toString(),
           )
         : null;
   }
@@ -69,6 +71,26 @@ class FirebaseService {
     final Map<String, Object> data = HashMap();
 
     data['profileImage'] = profileImage;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_authService.getCurrentUserUID())
+        .update(data);
+
+    Get.back();
+  }
+
+  Future<void> addAudio(File _audio) async {
+    String audioInitial = '';
+
+    if (_audio != null) {
+      audioInitial = await _utilsService.uploadAudioFile(_audio,
+          'user/profile/${FirebaseAuth.instance.currentUser.uid}/bio.m4a');
+    }
+
+    final Map<String, Object> data = HashMap();
+
+    data['audioLink'] = audioInitial;
 
     await FirebaseFirestore.instance
         .collection('users')
