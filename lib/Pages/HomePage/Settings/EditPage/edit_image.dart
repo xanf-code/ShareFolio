@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Services/utils/image_utils.dart';
 import 'package:my_app/Widget/constants.dart';
@@ -22,6 +26,7 @@ class _EditImageState extends State<EditImage> {
   bool uploading = false;
   final UtilsService _utils = UtilsService();
   int _selectedIndex = 0;
+  final AuthService _authService = AuthService();
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -43,85 +48,122 @@ class _EditImageState extends State<EditImage> {
             gradient: pageGradient,
           ),
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             children: [
-              TextButton(
-                onPressed: () {
-                  getImage();
-                },
-                child: const Text("Pick Image"),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20,
+                  top: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        getImage();
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            "Upload",
+                            style: GoogleFonts.dmSans(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          const Icon(
+                            FeatherIcons.image,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        HapticFeedback.mediumImpact();
+                        if (_profileImage != null) {
+                          setState(() {
+                            uploading = true;
+                          });
+                          _firebaseService.updateProfile(_profileImage);
+                        } else {
+                          showTopSnackBar(
+                            context,
+                            const CustomSnackBar.error(
+                              message: "No Image Picked!",
+                            ),
+                          );
+                        }
+                      },
+                      child: Center(
+                        child: uploading == true
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Text(
+                                "Save",
+                                style: GoogleFonts.dmSans(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               if (_profileImage != null)
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _profileImage = null;
-                    });
-                  },
-                  // ignore: sized_box_for_whitespace
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                    bottom: 20,
+                  ),
                   child: Container(
-                    height: 300,
+                    height: 400,
                     width: MediaQuery.of(context).size.width,
                     child: Image.file(
                       _profileImage,
                     ),
                   ),
-                  // ignore: sized_box_for_whitespace
                 )
               else
-                // ignore: sized_box_for_whitespace
-                Container(
-                  height: 300,
-                  width: MediaQuery.of(context).size.width,
-                ),
-              GestureDetector(
-                onTap: () {
-                  HapticFeedback.mediumImpact();
-                  if (_profileImage != null) {
-                    setState(() {
-                      uploading = true;
-                    });
-                    _firebaseService.updateProfile(_profileImage);
-                  } else {
-                    showTopSnackBar(
-                      context,
-                      const CustomSnackBar.error(
-                        message: "No Image Picked!",
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_authService.getCurrentUserUID())
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    final userDocument = snapshot.data;
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: SpinKitThreeBounce(
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 20,
+                      ),
+                      child: Container(
+                        height: 400,
+                        child: CachedNetworkImage(
+                          imageUrl: userDocument["profileImage"].toString() ==
+                                  " "
+                              ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+                              : userDocument["profileImage"].toString(),
+                        ),
                       ),
                     );
-                  }
-                },
-                child: Container(
-                  height: 50,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF1565C0),
-                        Color(0xFFb92b27),
-                      ],
-                      begin: FractionalOffset(0.0, 0.0),
-                      end: FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                    ),
-                  ),
-                  child: Center(
-                    child: uploading == true
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : Text(
-                            "Submit",
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                  ),
+                  },
                 ),
-              ),
-              //GRID VIEW OF IMAGES
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -135,14 +177,22 @@ class _EditImageState extends State<EditImage> {
                       _selectedIndex = index;
                       selectImage(index);
                     },
-                    child: Card(
-                      color: _selectedIndex == index
-                          ? Colors.blue
-                          : Colors.transparent,
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          height: 20,
-                          imageUrl: images[index].toString(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        color: _selectedIndex == index
+                            ? const Color(0xFF1e1d19)
+                            : Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              height: 20,
+                              imageUrl: images[index].toString(),
+                            ),
+                          ),
                         ),
                       ),
                     ),

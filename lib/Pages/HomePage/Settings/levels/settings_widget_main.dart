@@ -4,6 +4,7 @@ import 'package:my_app/Pages/HomePage/Settings/widgets/level2.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level3.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level4.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level5.dart';
+import 'package:my_app/Pages/HomePage/Settings/widgets/level_settings.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 
@@ -20,10 +21,12 @@ class level1_profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          level1(), //
+          level1(),
           Level2(authService: _authService),
           Level3(
             authService: _authService,
@@ -32,6 +35,7 @@ class level1_profile extends StatelessWidget {
           Level4(
             authService: _authService,
           ),
+          Level_settings(),
           Level5(),
         ],
       ),

@@ -4,10 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
-import 'package:share/share.dart';
+import 'package:my_app/Widget/bottom_card.dart';
 
 class Level3 extends StatelessWidget {
   final AuthService authService;
@@ -46,7 +47,7 @@ class Level3 extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(
-                          FeatherIcons.link,
+                          FeatherIcons.share2,
                           color: Colors.blue,
                           size: 14,
                         ),
@@ -89,15 +90,13 @@ class Level3 extends StatelessWidget {
                           ),
                           IconButton(
                             icon: const Icon(
-                              FontAwesomeIcons.link,
-                              color: Colors.white,
-                              size: 18,
+                              FontAwesomeIcons.share,
+                              color: Colors.white70,
+                              size: 15,
                             ),
                             onPressed: () {
-                              HapticFeedback.mediumImpact();
-                              Share.share(
-                                "Check out my ShareFolio profile ${userDocument['ref_link'].toString()}",
-                              );
+                              HapticFeedback.lightImpact();
+                              _modalBottomSheetMenu(context, userDocument);
                             },
                           ),
                         ],
@@ -143,6 +142,25 @@ class Level3 extends StatelessWidget {
                   ],
                 ),
               );
+      },
+    );
+  }
+
+  void _modalBottomSheetMenu(
+      BuildContext context, DocumentSnapshot userDocument) {
+    showModalBottomSheet(
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      context: context,
+      builder: (builder) {
+        return CardBottom(
+          userDocument: userDocument,
+        );
       },
     );
   }

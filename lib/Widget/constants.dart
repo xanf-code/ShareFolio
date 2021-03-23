@@ -13,8 +13,6 @@ const List images = [
   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/335c5063874533.5abf6aa9982f6.png",
   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/4fd34c63874533.5abf6aa999a46.png",
   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ca148563874533.5abf6aa8d737e.png",
-  "https://mir-s3-cdn-cf.behance.net/project_modules/disp/335c5063874533.5abf6aa9982f6.png",
-  "https://mir-s3-cdn-cf.behance.net/project_modules/disp/ca148563874533.5abf6aa8d737e.png",
   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/62305163874533.5abf6aa8da8e7.png",
   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/9ac0bb63874533.5abf6aa8db0c2.png",
   "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e0cb7863874533.5abf6aa8d6815.png",

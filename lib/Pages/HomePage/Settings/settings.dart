@@ -14,6 +14,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           stops: [0.0, 1.0, 1.5],
@@ -25,6 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
       child: ListView(
+        shrinkWrap: true,
         children: [
           level1_profile(),
           GestureDetector(

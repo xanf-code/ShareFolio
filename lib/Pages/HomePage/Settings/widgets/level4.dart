@@ -63,6 +63,7 @@ class Level4 extends StatelessWidget {
                         () => EditUserName(
                           userName: userDocument["name"].toString(),
                         ),
+                        fullscreenDialog: true,
                         preventDuplicates: true,
                       );
                     },

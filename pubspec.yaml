@@ -51,6 +51,8 @@ dependencies:
   firebase_storage: ^8.0.0
   share: ^2.0.1
   path_provider:
+  url_launcher: ^6.0.2
+  flutter_share_me: ^0.9.1
 
 dev_dependencies:
   flutter_test:

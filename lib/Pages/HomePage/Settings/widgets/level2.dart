@@ -23,6 +23,7 @@ class Level2 extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: 25.0,
         top: 25,
+        bottom: 8,
       ),
       child: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -51,6 +52,7 @@ class Level2 extends StatelessWidget {
                 },
                 child: CircleAvatar(
                   radius: 40,
+                  backgroundColor: Colors.transparent,
                   backgroundImage: CachedNetworkImageProvider(
                     userDocument["profileImage"].toString() == " "
                         ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
