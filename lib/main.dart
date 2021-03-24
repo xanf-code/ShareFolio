@@ -54,8 +54,8 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           home: initScreen == 0 || initScreen == null
               ? OnBoarding()
-              //    : const Wrapper(),
-              : Material(child: SettingsPage()),
+              : const Wrapper(),
+          //: Material(child: SettingsPage()),
         ),
       ),
     );

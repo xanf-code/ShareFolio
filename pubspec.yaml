@@ -54,7 +54,8 @@ dependencies:
   url_launcher: ^6.0.2
   flutter_share_me: ^0.9.1
   record: ^2.1.0+1
-  audioplayers: ^0.18.1
+  audioplayer: ^0.8.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

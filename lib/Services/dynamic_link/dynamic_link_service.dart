@@ -13,11 +13,13 @@ class DynamicLinkService {
     _handleDynamicLink(data);
 
     FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData dynamicLinkData) async {
-      _handleDynamicLink(dynamicLinkData);
-    }, onError: (OnLinkErrorException e) async {
-      debugPrint("Dynamic link failed : ${e.message}");
-    });
+      onSuccess: (PendingDynamicLinkData dynamicLinkData) async {
+        _handleDynamicLink(dynamicLinkData);
+      },
+      onError: (OnLinkErrorException e) async {
+        debugPrint("Dynamic link failed : ${e.message}");
+      },
+    );
   }
 
   Future<String> createUserLink(
@@ -52,7 +54,7 @@ class DynamicLinkService {
 
         if (userID != null) {
           Get.to(
-            ShareFolioPage(
+            () => ShareFolioPage(
               uid: userID,
             ),
           );

@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayer/audioplayer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/HomePage/Settings/EditPage/edit_image.dart';
@@ -32,6 +32,8 @@ class Level2 extends StatefulWidget {
 class _Level2State extends State<Level2> {
   bool isRecording = false;
   AudioPlayer audioPlayer = AudioPlayer();
+  File _audio;
+  final FirebaseFirestore _instance = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class _Level2State extends State<Level2> {
         bottom: 8,
       ),
       child: StreamBuilder(
-        stream: FirebaseFirestore.instance
+        stream: _instance
             .collection('users')
             .doc(widget._authService.getCurrentUserUID())
             .snapshots(),
@@ -163,16 +165,19 @@ class _Level2State extends State<Level2> {
     );
   }
 
-  File _audio;
   Future<void> recordAudio() async {
-    const String folderName = "bio_audio_files";
     final bool result = await Record.hasPermission();
     if (result == true && Platform.isAndroid) {
       final Directory tempDir = await getExternalStorageDirectory();
       final String tempPath =
           '${tempDir.path}/${DateTime.now().toString()}.m4a';
       final File audioFile = File(tempPath);
-      await Record.start(path: tempPath);
+      await Record.start(
+        path: tempPath,
+        encoder: AudioEncoder.AAC_HE,
+        bitRate: 256000,
+        samplingRate: 48000.0,
+      );
       setState(() {
         isRecording = true;
         _audio = audioFile;

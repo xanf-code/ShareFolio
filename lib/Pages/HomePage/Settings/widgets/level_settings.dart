@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:get/get.dart';
 import 'package:my_app/Pages/HomePage/Settings/widgets/level4.dart';
+
+import '../settings_screen.dart';
 
 class Level_settings extends StatelessWidget {
   @override
@@ -31,7 +34,10 @@ class Level_settings extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   HapticFeedback.mediumImpact();
-                  debugPrint("TAPPED");
+                  Get.to(
+                    () => const SettingsScreen(),
+                    fullscreenDialog: true,
+                  );
                 },
                 child: const MenuItems(
                   title: "Extras",
