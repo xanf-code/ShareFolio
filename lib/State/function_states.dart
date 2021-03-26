@@ -55,7 +55,7 @@ class FirebaseFunctions extends ChangeNotifier {
       'email': '',
       'name': '',
       'profileImage':
-          'https://firebasestorage.googleapis.com/v0/b/mynewapp-4d204.appspot.com/o/user%2Fprofile%2FDTWyAsbvSadZSjv26HcpqjK5rSu1%2Fprofile?alt=media&token=4a90e16e-dca3-42ab-8a1f-0eaed9c542e5',
+          'https://mir-s3-cdn-cf.behance.net/project_modules/disp/4fd34c63874533.5abf6aa999a46.png',
       'ref_link': '',
       "uid": '',
     });
