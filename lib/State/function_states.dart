@@ -52,12 +52,13 @@ class FirebaseFunctions extends ChangeNotifier {
   UserModel initialData() {
     return UserModel.fromMap({
       'audioLink': '',
-      'email': '',
-      'name': '',
+      'email': '🐮',
+      'name': '🐮',
       'profileImage':
           'https://mir-s3-cdn-cf.behance.net/project_modules/disp/4fd34c63874533.5abf6aa999a46.png',
       'ref_link': '',
-      "uid": '',
+      "uid": '🐮',
+      "bio": '🐮',
     });
   }
 }

@@ -7,8 +7,9 @@ class UserModel {
   String profileImage;
   String ref_link;
   String audioLink;
-
+  String bio;
   UserModel({
+    this.bio,
     this.name,
     this.email,
     this.uid,
@@ -23,7 +24,8 @@ class UserModel {
         uid = map['uid'].toString() ?? '',
         profileImage = map['profileImage'].toString() ?? '',
         ref_link = map['ref_link'].toString() ?? '',
-        audioLink = map['audioLink'].toString() ?? '';
+        audioLink = map['audioLink'].toString() ?? '',
+        bio = map['bio'].toString();
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(

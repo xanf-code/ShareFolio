@@ -27,6 +27,7 @@ class FirebaseService {
         'profileImage': photoURL ?? " ",
         "ref_link": " ",
         "audioLink": " ",
+        "bio": " ",
       });
     }
   }
@@ -41,6 +42,7 @@ class FirebaseService {
             profileImage: snapshot.data()["profileImage"].toString(),
             ref_link: snapshot.data()["ref_link"].toString(),
             audioLink: snapshot.data()["audioLink"].toString(),
+            bio: snapshot.data()['bio'].toString(),
           )
         : null;
   }
