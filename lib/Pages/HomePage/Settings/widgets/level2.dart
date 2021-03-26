@@ -95,7 +95,7 @@ class _Level2State extends State<Level2> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        HapticFeedback.lightImpact();
+                        HapticFeedback.mediumImpact();
                         isRecording == false ? recordAudio() : stopRecording();
                       },
                       child: Row(
