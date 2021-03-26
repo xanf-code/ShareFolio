@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:my_app/Pages/portfolio/portfolio_page.dart';
 
 class DynamicLinkService {
-  Future handleDynamicLinks() async {
+  Future handleDynamicLinks(BuildContext context) async {
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
 

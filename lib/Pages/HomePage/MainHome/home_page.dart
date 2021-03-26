@@ -10,11 +10,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
           stops: [0.0, 1.0, 1.5],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
           colors: [
             Color(0xFF08051a),
             Color(0xFF07041b),

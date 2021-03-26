@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,7 +12,7 @@ import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CardBottom extends StatelessWidget {
-  final DocumentSnapshot userDocument;
+  final String userDocument;
 
   const CardBottom({Key key, this.userDocument}) : super(key: key);
 
@@ -48,8 +47,7 @@ class CardBottom extends StatelessWidget {
                     Get.back();
                     Clipboard.setData(
                       ClipboardData(
-                        text:
-                            "Check out my ShareFolio profile ${userDocument['ref_link'].toString()}",
+                        text: "Check out my ShareFolio profile $userDocument",
                       ),
                     ).whenComplete(
                       () {
@@ -75,7 +73,7 @@ class CardBottom extends StatelessWidget {
                     HapticFeedback.lightImpact();
                     Get.back();
                     launch(
-                        "sms:?body=Check out my ShareFolio profile ${userDocument['ref_link'].toString()}");
+                        "sms:?body=Check out my ShareFolio profile $userDocument");
                   },
                   child: const ShareButton(
                     text: "Message",
@@ -88,7 +86,7 @@ class CardBottom extends StatelessWidget {
                     HapticFeedback.lightImpact();
                     Get.back();
                     FlutterShareMe().shareToTwitter(
-                      url: userDocument['ref_link'].toString(),
+                      url: userDocument,
                       msg: "Check out my ShareFolio profile",
                     );
                   },
@@ -103,8 +101,7 @@ class CardBottom extends StatelessWidget {
                     HapticFeedback.lightImpact();
                     Get.back();
                     FlutterShareMe().shareToWhatsApp(
-                      msg:
-                          "Check out my ShareFolio profile ${userDocument['ref_link'].toString()}",
+                      msg: "Check out my ShareFolio profile $userDocument",
                     );
                   },
                   child: const ShareButton(
@@ -118,7 +115,7 @@ class CardBottom extends StatelessWidget {
                     HapticFeedback.lightImpact();
                     Get.back();
                     Share.share(
-                      "Check out my ShareFolio profile ${userDocument['ref_link'].toString()}",
+                      "Check out my ShareFolio profile $userDocument",
                     );
                   },
                   child: const ShareButton(

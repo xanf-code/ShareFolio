@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'level4.dart';
+import 'package:my_app/Widget/menu_items.dart';
 
 class Level5 extends StatelessWidget {
   @override
@@ -36,7 +35,7 @@ class Level5 extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      MenuItems(
+                      const MenuItems(
                         title: "Subscription",
                         titleText: "Free",
                         button: "Edit",
@@ -50,17 +49,15 @@ class Level5 extends StatelessWidget {
                         },
                         child: Container(
                           height: 50,
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            gradient: new LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [
-                                const Color(0xFF1565C0),
-                                const Color(0xFFb92b27),
+                                Color(0xFF1565C0),
+                                Color(0xFFb92b27),
                               ],
-                              begin: const FractionalOffset(0.0, 0.0),
-                              end: const FractionalOffset(1.0, 0.0),
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp,
+                              begin: FractionalOffset(0.0, 0.0),
+                              end: FractionalOffset(1.0, 0.0),
                             ),
                           ),
                           child: Padding(
@@ -100,12 +97,12 @@ class Level5 extends StatelessWidget {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 65,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
                   ),
-                  color: const Color(0xFF272732),
+                  color: Color(0xFF272732),
                 ),
                 child: Center(
                   child: Text(

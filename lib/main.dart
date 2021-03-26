@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_app/State/generate_dynamic_link.dart';
 import 'package:my_app/Pages/Wrapper/wrapper.dart';
-import 'Pages/HomePage/Settings/settings.dart';
 import 'Services/dynamic_link/dynamic_link_service.dart';
 
 int initScreen;
@@ -19,7 +18,6 @@ int initScreen;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Provider.debugCheckInvalidValueType = null;
-  DynamicLinkService().handleDynamicLinks();
   await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = prefs.getInt("initScreen");
@@ -33,6 +31,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final DynamicLinkService _dynamicLinkService = DynamicLinkService();
+
+  @override
+  void initState() {
+    _dynamicLinkService.handleDynamicLinks(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
