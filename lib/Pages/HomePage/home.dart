@@ -1,4 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -47,11 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget getFooter() {
     final List<Widget> iconItems = [
       Icon(
-        FeatherIcons.home,
+        FluentSystemIcons.ic_fluent_home_regular,
         color: pageIndex == 0 ? Colors.yellow : Colors.white,
       ),
       Icon(
-        FeatherIcons.search,
+        FluentSystemIcons.ic_fluent_search_filled,
         color: pageIndex == 1 ? Colors.yellow : Colors.white,
       ),
       StreamProvider<UserModel>.value(
@@ -62,8 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
             return CircleAvatar(
               radius: 15,
               backgroundColor: Colors.transparent,
-              backgroundImage:
-                  CachedNetworkImageProvider(document.profileImage),
+              backgroundImage: ExtendedNetworkImageProvider(
+                document.profileImage,
+                cache: true,
+              ),
             );
           },
         ),
@@ -74,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: const EdgeInsets.only(
         left: 20.0,
         right: 20,
-        bottom: 12,
+        bottom: 22,
       ),
       child: Container(
         width: MediaQuery.of(context).size.width / 1.4,

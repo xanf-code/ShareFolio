@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -19,10 +19,10 @@ class Dynamic404 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            CachedNetworkImage(
-              imageUrl:
-                  "https://i.pinimg.com/originals/b4/be/ad/b4beadb8bcd5866a133250a46e317f3a.png",
+            ExtendedImage.network(
+              "https://i.pinimg.com/originals/b4/be/ad/b4beadb8bcd5866a133250a46e317f3a.png",
               height: MediaQuery.of(context).size.height / 4,
+
               // color: Colors.white,
             ),
             const SizedBox(

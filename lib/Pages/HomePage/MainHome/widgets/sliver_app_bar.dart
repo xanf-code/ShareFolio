@@ -1,4 +1,4 @@
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +38,7 @@ class SliverBar extends StatelessWidget {
                 ),
               ),
               Text(
-                "Let's be productive today.",
+                subHeading(),
                 style: GoogleFonts.poppins(
                   color: Colors.white30,
                   fontSize: 15,
@@ -49,7 +49,7 @@ class SliverBar extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(
-              FeatherIcons.bell,
+              FluentSystemIcons.ic_fluent_channel_notifications_regular,
               color: Colors.white,
             ),
             onPressed: () {
@@ -70,5 +70,16 @@ class SliverBar extends StatelessWidget {
       return 'Afternoon ⛅';
     }
     return 'Evening 🌇';
+  }
+
+  String subHeading() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return "Let's be productive today.";
+    }
+    if (hour < 18) {
+      return "There's something in you the world needs.";
+    }
+    return 'Cheer up, tomorrow is another chance.';
   }
 }

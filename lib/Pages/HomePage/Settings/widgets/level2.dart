@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:audioplayer/audioplayer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -61,10 +61,11 @@ class _Level2State extends State<Level2> {
                   child: CircleAvatar(
                     radius: 40,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: CachedNetworkImageProvider(
+                    backgroundImage: ExtendedNetworkImageProvider(
                       document.profileImage.toString() == " "
                           ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
                           : document.profileImage.toString(),
+                      cache: true,
                     ),
                   ),
                 ),

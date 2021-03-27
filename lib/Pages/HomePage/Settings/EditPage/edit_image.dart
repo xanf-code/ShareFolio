@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -154,9 +154,8 @@ class _EditImageState extends State<EditImage> {
                       ),
                       child: Container(
                         height: 400,
-                        child: CachedNetworkImage(
-                          imageUrl: userDocument["profileImage"].toString() ==
-                                  " "
+                        child: ExtendedImage.network(
+                          userDocument["profileImage"].toString() == " "
                               ? "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
                               : userDocument["profileImage"].toString(),
                         ),
@@ -188,9 +187,9 @@ class _EditImageState extends State<EditImage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ClipOval(
-                            child: CachedNetworkImage(
+                            child: ExtendedImage.network(
+                              images[index].toString(),
                               height: 20,
-                              imageUrl: images[index].toString(),
                             ),
                           ),
                         ),

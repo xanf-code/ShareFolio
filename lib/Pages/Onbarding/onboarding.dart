@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,11 +49,17 @@ class _OnBoardingState extends State<OnBoarding> {
         itemBuilder: (context, index) {
           return Column(
             children: <Widget>[
-              if (index == 1) _displayText(list[index].text) else _displayImage(list[index].url),
+              if (index == 1)
+                _displayText(list[index].text)
+              else
+                _displayImage(list[index].url),
               const SizedBox(
                 height: 25,
               ),
-              if (index == 1) _displayImage(list[index].url) else _displayText(list[index].text),
+              if (index == 1)
+                _displayImage(list[index].url)
+              else
+                _displayText(list[index].text),
             ],
           );
         },
@@ -180,9 +186,9 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 
-  CachedNetworkImage _displayImage(String imageUrl) {
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
+  ExtendedImage _displayImage(String imageUrl) {
+    return ExtendedImage.network(
+      imageUrl,
       height: MediaQuery.of(context).size.height * .5,
     );
   }
