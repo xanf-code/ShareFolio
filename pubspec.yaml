@@ -53,6 +53,7 @@ dependencies:
   intl: ^0.17.0
   extended_image: ^4.0.0
   fluentui_icons: ^0.2.0
+  flutter_chip_tags: ^1.0.4
 
 dev_dependencies:
   flutter_test:

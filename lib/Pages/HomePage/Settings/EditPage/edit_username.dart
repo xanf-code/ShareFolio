@@ -49,6 +49,7 @@ class _EditUserNameState extends State<EditUserName> {
               hint: " ",
               controller: _editName,
               isObscure: false,
+              fillColor: const Color(0xFF171717),
             ),
             TextButton(
               onPressed: () {

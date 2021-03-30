@@ -62,6 +62,7 @@ class _PassResetState extends State<PassReset> {
                 hint: 'john@example.com',
                 controller: _resetPass,
                 isObscure: false,
+                fillColor: const Color(0xFF171717),
               ),
               const SizedBox(
                 height: 14,

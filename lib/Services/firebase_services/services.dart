@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/utils/upload_utils.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseService {
   final String uid;
@@ -28,6 +29,14 @@ class FirebaseService {
         "ref_link": " ",
         "audioLink": " ",
         "bio": " ",
+        "data": {
+          "about": false,
+          "education": false,
+          "skills": false,
+          "certificate": false,
+          "publications": false,
+          "achievements": false,
+        },
       });
     }
   }
@@ -100,5 +109,42 @@ class FirebaseService {
         .update(data);
 
     Get.back();
+  }
+
+  //CREATE USER SHAREFOLIO-ABOUT
+  Future createAboutShareFolio(BuildContext context, String type, String name,
+      String bio, String userID) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userID)
+        .collection("shareFolio")
+        .doc('details')
+        .set({
+      "aboutSection": {
+        "about": {
+          "name": name,
+          "type": type,
+          "bio": bio,
+          "userID": userID,
+        }
+      },
+      "skills": [],
+      "education": {},
+      "certificate": {},
+      "achievements": {},
+      "publications": {},
+    });
+  }
+
+  //CREATE USER SHAREFOLIO-SKILLS
+  Future createSkills(BuildContext context, List skills, String userID) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userID)
+        .collection("shareFolio")
+        .doc('details')
+        .update({
+      "skills": FieldValue.arrayUnion(skills),
+    });
   }
 }

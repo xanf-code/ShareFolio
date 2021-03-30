@@ -41,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hint: 'Pick a name',
                 controller: _fullNameController,
                 isObscure: false,
+                fillColor: const Color(0xFF171717),
               ),
               const SizedBox(
                 height: 20,
@@ -50,6 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hint: 'john@example.com',
                 controller: _emailController,
                 isObscure: false,
+                fillColor: const Color(0xFF171717),
               ),
               const SizedBox(
                 height: 20,
@@ -59,6 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hint: 'Pick a strong password',
                 controller: _passwordController,
                 isObscure: true,
+                fillColor: const Color(0xFF171717),
               ),
               const SizedBox(
                 height: 20,
@@ -68,6 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hint: 'Confirm password',
                 controller: _confirmPasswordController,
                 isObscure: true,
+                fillColor: const Color(0xFF171717),
               ),
               const SizedBox(
                 height: 20,

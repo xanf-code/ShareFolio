@@ -67,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hint: 'john@example.com',
                 controller: _emailController,
                 isObscure: false,
+                fillColor: const Color(0xFF171717),
               ),
               const SizedBox(
                 height: 20,
@@ -76,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hint: 'Your Password here',
                 controller: _passwordController,
                 isObscure: true,
+                fillColor: const Color(0xFF171717),
               ),
               GestureDetector(
                 onTap: () {

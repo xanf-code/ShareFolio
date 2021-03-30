@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Level3 extends StatelessWidget {
@@ -92,6 +93,8 @@ class FieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final bool isObscure;
   final int length;
+  final Color fillColor;
+  final MaxLengthEnforcement maxLengthEnforcement;
   const FieldWidget({
     Key key,
     this.label,
@@ -99,6 +102,8 @@ class FieldWidget extends StatelessWidget {
     this.controller,
     this.isObscure,
     this.length,
+    this.fillColor,
+    this.maxLengthEnforcement,
   }) : super(key: key);
 
   @override
@@ -125,6 +130,9 @@ class FieldWidget extends StatelessWidget {
             right: 35,
           ),
           child: TextFormField(
+            maxLengthEnforcement:
+                maxLengthEnforcement ?? MaxLengthEnforcement.none,
+            maxLength: 130,
             maxLines: length ?? 1,
             obscureText: isObscure,
             controller: controller,
@@ -145,7 +153,7 @@ class FieldWidget extends StatelessWidget {
                 ),
               ),
               filled: true,
-              fillColor: const Color(0xFF171717),
+              fillColor: fillColor,
               contentPadding: const EdgeInsets.all(25),
             ),
           ),
