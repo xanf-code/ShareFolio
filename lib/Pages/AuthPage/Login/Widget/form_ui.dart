@@ -152,6 +152,12 @@ class FieldWidget extends StatelessWidget {
                   style: BorderStyle.none,
                 ),
               ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 0.0,
+                ),
+              ),
               filled: true,
               fillColor: fillColor,
               contentPadding: const EdgeInsets.all(25),

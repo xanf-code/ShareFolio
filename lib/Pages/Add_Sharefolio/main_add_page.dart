@@ -5,6 +5,8 @@ import 'package:my_app/Pages/Add_Sharefolio/skills_page.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/Widget/constants.dart';
 
+import 'education_page.dart';
+
 class MainAddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,26 @@ class MainAddPage extends StatelessWidget {
                 },
                 child: const Text(
                   "Skills",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 22.0,
+                top: 12,
+                bottom: 8,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(
+                    () => Education(),
+                  );
+                },
+                child: const Text(
+                  "Education",
                   style: TextStyle(
                     color: Colors.white,
                   ),

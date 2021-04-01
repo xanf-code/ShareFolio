@@ -120,19 +120,17 @@ class FirebaseService {
         .collection("shareFolio")
         .doc('details')
         .set({
-      "aboutSection": {
-        "about": {
-          "name": name,
-          "type": type,
-          "bio": bio,
-          "userID": userID,
-        }
+      "about": {
+        "name": name,
+        "type": type,
+        "bio": bio,
+        "userID": userID,
       },
       "skills": [],
-      "education": {},
-      "certificate": {},
-      "achievements": {},
-      "publications": {},
+      "education": [],
+      "certificate": [],
+      "achievements": [],
+      "publications": [],
     });
   }
 
@@ -145,6 +143,37 @@ class FirebaseService {
         .doc('details')
         .update({
       "skills": FieldValue.arrayUnion(skills),
+    });
+  }
+
+  //CREATE USER SHAREFOLIO-EDUCATION
+  Future createEducation(
+      BuildContext context,
+      String type,
+      String Name,
+      String Field,
+      String StartDate,
+      String EndDate,
+      String Description,
+      String Years,
+      String userID) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userID)
+        .collection("shareFolio")
+        .doc('details')
+        .update({
+      "education": FieldValue.arrayUnion([
+        {
+          "Type": type,
+          "Name": Name,
+          "Field": Field,
+          "Start Date": StartDate,
+          "End Date": EndDate,
+          "Description": Description,
+          "Years": Years,
+        },
+      ])
     });
   }
 }

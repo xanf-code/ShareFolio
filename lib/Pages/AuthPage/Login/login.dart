@@ -61,7 +61,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-
               FieldWidget(
                 label: "Email",
                 hint: 'john@example.com',

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:my_app/Models/user_db.dart';
+import 'package:my_app/Pages/Add_Sharefolio/education_page.dart';
 import 'package:my_app/Pages/Add_Sharefolio/skills_page.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
@@ -133,6 +134,51 @@ class FirebaseFunctions extends ChangeNotifier {
               .doc(_authService.getCurrentUserUID())
               .update({
             "data.skills": true,
+          });
+          Get.off(
+            () => Education(),
+          );
+        });
+      }
+    } catch (e) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: e.toString(),
+        ),
+      );
+    }
+    notifyListeners();
+  }
+
+  Future createEducation(
+      BuildContext context,
+      String type,
+      String Name,
+      String Field,
+      String StartDate,
+      String EndDate,
+      String Description,
+      String Years,
+      String userID) async {
+    try {
+      if (type.isEmpty) {
+        showTopSnackBar(
+          context,
+          const CustomSnackBar.error(
+            message: "Type cannot be empty!",
+          ),
+        );
+      } else {
+        await _firebaseService
+            .createEducation(context, type, Name, Field, StartDate, EndDate,
+                Description, Years, userID)
+            .whenComplete(() async {
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(_authService.getCurrentUserUID())
+              .update({
+            "data.education": true,
           });
           Get.back();
         });
