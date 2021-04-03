@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
+import 'package:my_app/Services/API/suggestion.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/constants.dart';
 import 'package:provider/provider.dart';
+
+import 'dropdown_suggestion.dart';
+import 'education_name.dart';
 
 class TypeContainer extends StatefulWidget {
   @override
@@ -18,6 +22,30 @@ class _TypeContainerState extends State<TypeContainer> {
   String type = 'Individual';
   final TextEditingController nameController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final APIServices _apiServices = APIServices();
+  String location;
+  String logo;
+  final List _location = [];
+
+  @override
+  void initState() {
+    super.initState();
+    locationController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    locationController.removeListener(_onSearchChanged);
+    locationController.dispose();
+    super.dispose();
+  }
+
+  // ignore: always_declare_return_types
+  _onSearchChanged() {
+    _apiServices.getLocationResults(
+        locationController.text, _location, "LocationTag");
+  }
 
   List name = [
     {
@@ -147,7 +175,7 @@ class _TypeContainerState extends State<TypeContainer> {
         Padding(
           padding: const EdgeInsets.only(
             top: 22.0,
-            bottom: 8,
+            //bottom: 8,
           ),
           child: FieldWidget(
             label: _selectedIndex == 0 ? "Your Name" : "Organisation Name",
@@ -158,8 +186,27 @@ class _TypeContainerState extends State<TypeContainer> {
             fillColor: Colors.grey.withOpacity(0.05),
           ),
         ),
+        const Education_Name(
+          text: "Location",
+        ),
+        DropDown_Suggestion(
+          placeList: _location,
+          name: locationController,
+          onSuggestionSelected: (suggestion) {
+            setState(() {
+              locationController.text =
+                  suggestion["tag"]["display_name"].toString();
+              logo = suggestion["tag"]["pic"].toString();
+            });
+          },
+          type: "LocationTag",
+          hint: "Ex: London",
+        ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+          padding: const EdgeInsets.only(
+            bottom: 8.0,
+            top: 8,
+          ),
           child: FieldWidget(
             label:
                 _selectedIndex == 0 ? "About Yourself" : "About Organisation",
@@ -180,6 +227,7 @@ class _TypeContainerState extends State<TypeContainer> {
               type,
               nameController.text,
               bioController.text,
+              locationController.text,
               AuthService().getCurrentUserUID(),
             );
           },

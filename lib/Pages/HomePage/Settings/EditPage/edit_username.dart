@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/function_states.dart';
@@ -51,8 +52,8 @@ class _EditUserNameState extends State<EditUserName> {
               isObscure: false,
               fillColor: const Color(0xFF171717),
             ),
-            TextButton(
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 HapticFeedback.mediumImpact();
                 if (_editName.text.isEmpty || _editName.text == " ") {
                   showTopSnackBar(
@@ -77,7 +78,21 @@ class _EditUserNameState extends State<EditUserName> {
                   );
                 }
               },
-              child: Text("Update"),
+              child: Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                color: primary,
+                child: Center(
+                  child: Text(
+                    "Update",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

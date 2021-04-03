@@ -66,7 +66,7 @@ class FirebaseFunctions extends ChangeNotifier {
   }
 
   Future createAboutShareFolio(BuildContext context, String type, String name,
-      String bio, String userID) async {
+      String bio, String location, String userID) async {
     try {
       if (bio.length > 135) {
         showTopSnackBar(
@@ -84,7 +84,7 @@ class FirebaseFunctions extends ChangeNotifier {
         );
       } else {
         await _firebaseService
-            .createAboutShareFolio(context, type, name, bio, userID)
+            .createAboutShareFolio(context, type, name, bio, location, userID)
             .whenComplete(() async {
           await FirebaseFirestore.instance
               .collection("users")

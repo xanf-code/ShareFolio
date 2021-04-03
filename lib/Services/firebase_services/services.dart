@@ -91,7 +91,7 @@ class FirebaseService {
 
   //CREATE USER SHAREFOLIO-ABOUT
   Future createAboutShareFolio(BuildContext context, String type, String name,
-      String bio, String userID) async {
+      String bio, String location, String userID) async {
     await FirebaseFirestore.instance
         .collection("users")
         .doc(userID)
@@ -102,6 +102,7 @@ class FirebaseService {
         "name": name,
         "type": type,
         "bio": bio,
+        "location": location,
         "userID": userID,
       },
       "skills": [],

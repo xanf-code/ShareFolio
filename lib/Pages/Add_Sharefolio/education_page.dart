@@ -43,7 +43,7 @@ class _EducationState extends State<Education> {
 
   // ignore: always_declare_return_types
   _onSearchChanged() {
-    _apiServices.getLocationResults(_name.text, _placeList);
+    _apiServices.getLocationResults(_name.text, _placeList, "CollegeTag");
   }
 
   @override
@@ -78,10 +78,12 @@ class _EducationState extends State<Education> {
               name: _name,
               onSuggestionSelected: (suggestion) {
                 setState(() {
-                  _name.text = suggestion["name"].toString();
-                  logo = suggestion["logo"].toString();
+                  _name.text = suggestion["tag"]["display_name"].toString();
+                  logo = suggestion["tag"]["pic"].toString();
                 });
               },
+              type: "CollegeTag",
+              hint: "Ex: Oxford University",
             ),
             FieldWidget(
               length: 1,

@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import 'package:my_app/Pages/HomePage/SearchPage/search.dart';
 import 'package:my_app/Pages/HomePage/Settings/settings.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/animated_indexed_stack.dart';
+import 'package:my_app/Widget/constants.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -28,21 +28,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Stack(
-        children: [
-          getBody(),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: getFooter(),
-          ),
-        ],
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.black,
+        ),
+        child: Stack(
+          children: [
+            getBody(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: getFooter(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget getBody() {
     return AnimatedIndexedStack(
-      //key: ValueKey<int>(pageIndex),
       index: pageIndex,
       children: pages,
     );
@@ -52,11 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final List<Widget> iconItems = [
       Icon(
         FluentSystemIcons.ic_fluent_home_regular,
-        color: pageIndex == 0 ? Colors.yellow : Colors.white,
+        color: pageIndex == 0 ? primary : Colors.white,
       ),
       Icon(
         FluentSystemIcons.ic_fluent_search_filled,
-        color: pageIndex == 1 ? Colors.yellow : Colors.white,
+        color: pageIndex == 1 ? primary : Colors.white,
       ),
       StreamProvider<UserModel>.value(
         initialData: Provider.of<FirebaseFunctions>(context).initialData(),
@@ -101,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
               (int index) {
                 return InkWell(
                   onTap: () {
-                    HapticFeedback.mediumImpact();
+                    HapticFeedback.lightImpact();
                     selectedTab(index);
                   },
                   child: Column(
@@ -122,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           height: 5,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFFe0f2f1),
+                            color: primary,
                           ),
                         ),
                       )

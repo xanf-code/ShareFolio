@@ -9,9 +9,15 @@ class DropDown_Suggestion extends StatelessWidget {
   final List placeList;
   final TextEditingController name;
   final Function(dynamic) onSuggestionSelected;
-
+  final String type;
+  final String hint;
   DropDown_Suggestion(
-      {Key key, this.onSuggestionSelected, this.placeList, this.name})
+      {Key key,
+      this.onSuggestionSelected,
+      this.placeList,
+      this.name,
+      this.type,
+      this.hint})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,7 @@ class DropDown_Suggestion extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           decoration: InputDecoration(
-            hintText: "Ex: Oxford University",
+            hintText: hint,
             hintStyle: GoogleFonts.dmSans(fontSize: 16, color: Colors.white54),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -60,18 +66,27 @@ class DropDown_Suggestion extends StatelessWidget {
                   radius: 20,
                   backgroundColor: Colors.transparent,
                   backgroundImage: ExtendedNetworkImageProvider(
-                    suggestion["logo"].toString(),
+                    suggestion["tag"]["pic"].toString() ==
+                                "https://angel.co/images/shared/nopic_college.png" ||
+                            suggestion["tag"]["pic"].toString() == ""
+                        ? "https://full.am/images/default_company.png"
+                        : suggestion["tag"]["pic"].toString(),
                     cache: true,
                   ),
                 ),
                 const SizedBox(
                   width: 12,
                 ),
-                Text(
-                  suggestion["name"].toString(),
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  color: Colors.transparent,
+                  width: 250,
+                  child: Text(
+                    suggestion["tag"]["display_name"].toString(),
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -80,7 +95,7 @@ class DropDown_Suggestion extends StatelessWidget {
         },
         onSuggestionSelected: onSuggestionSelected,
         suggestionsCallback: (String pattern) {
-          return _apiServices.getLocationResults(pattern, placeList);
+          return _apiServices.getLocationResults(pattern, placeList, type);
         },
       ),
     );
