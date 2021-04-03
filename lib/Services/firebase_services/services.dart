@@ -27,7 +27,6 @@ class FirebaseService {
         "uid": uid,
         'profileImage': photoURL ?? " ",
         "ref_link": " ",
-        "audioLink": " ",
         "bio": " ",
         "data": {
           "about": false,
@@ -50,7 +49,6 @@ class FirebaseService {
             email: snapshot.data()["email"].toString(),
             profileImage: snapshot.data()["profileImage"].toString(),
             ref_link: snapshot.data()["ref_link"].toString(),
-            audioLink: snapshot.data()["audioLink"].toString(),
             bio: snapshot.data()['bio'].toString(),
           )
         : null;
@@ -82,26 +80,6 @@ class FirebaseService {
     final Map<String, Object> data = HashMap();
 
     data['profileImage'] = profileImage;
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(_authService.getCurrentUserUID())
-        .update(data);
-
-    Get.back();
-  }
-
-  Future<void> addAudio(File _audio) async {
-    String audioInitial = '';
-
-    if (_audio != null) {
-      audioInitial = await _utilsService.uploadAudioFile(_audio,
-          'user/profile/${FirebaseAuth.instance.currentUser.uid}/bio.m4a');
-    }
-
-    final Map<String, Object> data = HashMap();
-
-    data['audioLink'] = audioInitial;
 
     await FirebaseFirestore.instance
         .collection('users')
@@ -155,7 +133,7 @@ class FirebaseService {
       String StartDate,
       String EndDate,
       String Description,
-      String Years,
+      String imageLogo,
       String userID) async {
     await FirebaseFirestore.instance
         .collection("users")
@@ -171,7 +149,7 @@ class FirebaseService {
           "Start Date": StartDate,
           "End Date": EndDate,
           "Description": Description,
-          "Years": Years,
+          "Logo": imageLogo,
         },
       ])
     });

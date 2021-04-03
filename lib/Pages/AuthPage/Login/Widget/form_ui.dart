@@ -95,6 +95,7 @@ class FieldWidget extends StatelessWidget {
   final int length;
   final Color fillColor;
   final MaxLengthEnforcement maxLengthEnforcement;
+
   const FieldWidget({
     Key key,
     this.label,
@@ -130,6 +131,7 @@ class FieldWidget extends StatelessWidget {
             right: 35,
           ),
           child: TextFormField(
+            textCapitalization: TextCapitalization.sentences,
             maxLengthEnforcement:
                 maxLengthEnforcement ?? MaxLengthEnforcement.none,
             maxLength: 130,

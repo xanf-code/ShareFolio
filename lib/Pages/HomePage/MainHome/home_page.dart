@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/Add_Sharefolio/main_add_page.dart';
 import 'package:my_app/Pages/HomePage/MainHome/widgets/sliver_app_bar.dart';
 import 'package:my_app/State/function_states.dart';
+import 'package:my_app/Widget/constants.dart';
 import 'package:provider/provider.dart';
 import 'MainPage_columns/popular_categories.dart';
 import 'MainPage_columns/ranked_sharefolios.dart';
@@ -56,24 +58,51 @@ class _HomePageState extends State<HomePage> {
                     shrinkWrap: true,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 18,
-                          left: 12,
-                          right: 12,
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            HapticFeedback.lightImpact();
-                            Get.to(
-                              () => MainAddPage(),
-                              fullscreenDialog: true,
-                            );
-                          },
-                          icon: const Icon(
-                            FluentSystemIcons.ic_fluent_add_circle_filled,
-                            color: Colors.white,
-                            size: 30,
-                          ),
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: primary,
+                                ),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  HapticFeedback.lightImpact();
+                                  Get.to(
+                                    () => MainAddPage(),
+                                    fullscreenDialog: true,
+                                  );
+                                },
+                                icon: const Icon(
+                                  FluentSystemIcons.ic_fluent_add_circle_filled,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: primary,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "CARDS",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const Ranked(),

@@ -1,13 +1,14 @@
+import 'package:animations/animations.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/HomePage/MainHome/home_page.dart';
 import 'package:my_app/Pages/HomePage/SearchPage/search.dart';
 import 'package:my_app/Pages/HomePage/Settings/settings.dart';
 import 'package:my_app/State/function_states.dart';
+import 'package:my_app/Widget/animated_indexed_stack.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -26,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           getBody(),
@@ -39,7 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget getBody() {
-    return IndexedStack(
+    return AnimatedIndexedStack(
+      //key: ValueKey<int>(pageIndex),
       index: pageIndex,
       children: pages,
     );

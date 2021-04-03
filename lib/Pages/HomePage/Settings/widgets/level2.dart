@@ -1,21 +1,14 @@
 import 'dart:io';
-
-import 'package:audioplayer/audioplayer.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/HomePage/Settings/EditPage/edit_image.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
-import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/State/function_states.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:record/record.dart';
 
 class Level2 extends StatefulWidget {
   const Level2({
@@ -31,10 +24,6 @@ class Level2 extends StatefulWidget {
 }
 
 class _Level2State extends State<Level2> {
-  bool isRecording = false;
-  AudioPlayer audioPlayer = AudioPlayer();
-  File _audio;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -94,60 +83,7 @@ class _Level2State extends State<Level2> {
                     const SizedBox(
                       height: 6,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        HapticFeedback.mediumImpact();
-                        isRecording == false ? recordAudio() : stopRecording();
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            isRecording == false
-                                ? FeatherIcons.mic
-                                : FeatherIcons.stopCircle,
-                            color: Colors.white54,
-                            size: 15,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          if (isRecording == false)
-                            Text(
-                              "Record Bio",
-                              style: GoogleFonts.dmSans(
-                                color: Colors.white54,
-                              ),
-                            )
-                          else
-                            const Padding(
-                              padding: EdgeInsets.only(left: 4.0),
-                              child: SpinKitWave(
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
                   ],
-                ),
-                const Spacer(),
-                Visibility(
-                  // ignore: avoid_bool_literals_in_conditional_expressions
-                  visible: document.audioLink != " " ? true : false,
-                  child: IconButton(
-                    icon: const Icon(
-                      FeatherIcons.volume,
-                      color: Colors.white,
-                    ),
-                    onPressed: () async {
-                      HapticFeedback.mediumImpact();
-                      await audioPlayer.play(
-                        document.audioLink.toString(),
-                      );
-                    },
-                  ),
                 ),
               ],
             );
@@ -155,33 +91,5 @@ class _Level2State extends State<Level2> {
         ),
       ),
     );
-  }
-
-  Future<void> recordAudio() async {
-    final bool result = await Record.hasPermission();
-    if (result == true && Platform.isAndroid) {
-      final Directory tempDir = await getExternalStorageDirectory();
-      final String tempPath =
-          '${tempDir.path}/${DateTime.now().toString()}.m4a';
-      final File audioFile = File(tempPath);
-      await Record.start(
-        path: tempPath,
-        encoder: AudioEncoder.AAC_HE,
-        bitRate: 256000,
-        samplingRate: 48000.0,
-      );
-      setState(() {
-        isRecording = true;
-        _audio = audioFile;
-      });
-    }
-  }
-
-  Future<void> stopRecording() async {
-    await Record.stop();
-    setState(() {
-      isRecording = false;
-      FirebaseService().addAudio(_audio);
-    });
   }
 }

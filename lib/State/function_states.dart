@@ -55,7 +55,6 @@ class FirebaseFunctions extends ChangeNotifier {
 
   UserModel initialData() {
     return UserModel.fromMap({
-      'audioLink': '',
       'email': '🐮',
       'name': '🐮',
       'profileImage':
@@ -159,7 +158,7 @@ class FirebaseFunctions extends ChangeNotifier {
       String StartDate,
       String EndDate,
       String Description,
-      String Years,
+      String imageLogo,
       String userID) async {
     try {
       if (type.isEmpty) {
@@ -172,7 +171,7 @@ class FirebaseFunctions extends ChangeNotifier {
       } else {
         await _firebaseService
             .createEducation(context, type, Name, Field, StartDate, EndDate,
-                Description, Years, userID)
+                Description, imageLogo, userID)
             .whenComplete(() async {
           await FirebaseFirestore.instance
               .collection("users")

@@ -1,10 +1,16 @@
-import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/Pages/Add_Sharefolio/widgets/dropdown_suggestion.dart';
+import 'package:my_app/Pages/Add_Sharefolio/widgets/edu_dropdown.dart';
+import 'package:my_app/Pages/Add_Sharefolio/widgets/education_level_1.dart';
+import 'package:my_app/Pages/Add_Sharefolio/widgets/education_name.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
+import 'package:my_app/Services/API/suggestion.dart';
+import 'package:my_app/Services/Authentication_service/auth_service.dart';
+import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/constants.dart';
-import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 
 class Education extends StatefulWidget {
   @override
@@ -13,9 +19,14 @@ class Education extends StatefulWidget {
 
 class _EducationState extends State<Education> {
   String type;
+  String logo;
+  String startDate;
+  String endDate;
+  final APIServices _apiServices = APIServices();
+  final TextEditingController description = TextEditingController();
   final TextEditingController _name = TextEditingController();
   final TextEditingController _field = TextEditingController();
-  List _placesList = [];
+  final List _placeList = [];
 
   @override
   void initState() {
@@ -32,27 +43,7 @@ class _EducationState extends State<Education> {
 
   // ignore: always_declare_return_types
   _onSearchChanged() {
-    getLocationResults(_name.text);
-  }
-
-  // ignore: avoid_void_async
-  void getLocationResults(String input) async {
-    if (input.isEmpty) {
-      debugPrint("INPUT EMPTY");
-    }
-    try {
-      const String baseURL =
-          'https://autocomplete.clearbit.com/v1/companies/suggest';
-      final String request = '$baseURL?query=$input';
-      final Response response = await Dio().get(request);
-      final List predictions = response.data as List;
-
-      setState(() {
-        _placesList = predictions;
-      });
-    } catch (e) {
-      debugPrint(e.message.toString());
-    }
+    _apiServices.getLocationResults(_name.text, _placeList);
   }
 
   @override
@@ -66,110 +57,31 @@ class _EducationState extends State<Education> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(
-                left: 22.0,
-                top: 8,
-              ),
-              child: Level1Form(
-                type: "Education",
-              ),
+            EducationForm_Level1(),
+            EduDropDown(
+              hint: "University/School",
+              itemList: [
+                'School',
+                'University',
+              ],
+              onChange: (String value) {
+                setState(() {
+                  type = value;
+                });
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 22,
-                left: 22,
-              ),
-              child: Text(
-                "Tell us about yourself",
-                style: GoogleFonts.poppins(
-                  color: primary,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+            const Education_Name(
+              text: "Name",
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 37.0,
-              ),
-              child: Text(
-                "Type",
-                style: GoogleFonts.dmSans(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 8.0,
-                left: 22,
-                bottom: 12,
-                right: 22,
-              ),
-              child: DropdownButtonFormField<String>(
-                dropdownColor: Colors.black,
-                icon: const Icon(
-                  FluentSystemIcons.ic_fluent_chevron_down_regular,
-                  color: Colors.white54,
-                  size: 14,
-                ),
-                elevation: 0,
-                focusColor: Colors.white,
-                style: const TextStyle(color: Colors.white),
-                iconEnabledColor: Colors.black,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 0.0,
-                    ),
-                  ),
-                  filled: false,
-                  fillColor: Colors.grey.withOpacity(0.05),
-                ),
-                items: <String>[
-                  'School',
-                  'University',
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                }).toList(),
-                hint: Text(
-                  "University/School",
-                  style: GoogleFonts.dmSans(
-                    color: Colors.white54,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                onChanged: (String value) {
-                  setState(() {
-                    type = value;
-                  });
-                },
-              ),
-            ),
-            FieldWidget(
-              length: 1,
-              label: "Name",
-              hint: "Ex: Oxford University",
-              isObscure: false,
-              controller: _name,
-              fillColor: Colors.grey.withOpacity(0.05),
+            DropDown_Suggestion(
+              placeList: _placeList,
+              name: _name,
+              onSuggestionSelected: (suggestion) {
+                setState(() {
+                  _name.text = suggestion["name"].toString();
+                  logo = suggestion["logo"].toString();
+                });
+              },
             ),
             FieldWidget(
               length: 1,
@@ -179,21 +91,75 @@ class _EducationState extends State<Education> {
               controller: _field,
               fillColor: Colors.grey.withOpacity(0.05),
             ),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Education_Name(
+                      text: "Start Date",
+                    ),
+                    Container(
+                      color: Colors.transparent,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: EduDropDown(
+                        hint: "Start Date",
+                        itemList: years,
+                        onChange: (String value) {
+                          setState(() {
+                            startDate = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Education_Name(
+                      text: "End Date",
+                    ),
+                    Container(
+                      color: Colors.transparent,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: EduDropDown(
+                        itemList: years,
+                        hint: "End Date",
+                        onChange: (String value) {
+                          setState(() {
+                            endDate = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            FieldWidget(
+              length: 7,
+              label: "Description",
+              hint: " ",
+              isObscure: false,
+              controller: description,
+              fillColor: Colors.grey.withOpacity(0.05),
+            ),
             GestureDetector(
               onTap: () {
                 HapticFeedback.lightImpact();
-                // Provider.of<FirebaseFunctions>(context, listen: false)
-                //     .createEducation(
-                //   context,
-                //   type,
-                //   _name.text,
-                //   _field.text,
-                //   " ",
-                //   " ",
-                //   " ",
-                //   " ",
-                //   AuthService().getCurrentUserUID(),
-                // );
+                Provider.of<FirebaseFunctions>(context, listen: false)
+                    .createEducation(
+                  context,
+                  type ?? "School",
+                  _name.text,
+                  _field.text,
+                  startDate.toString() ?? "2021",
+                  endDate.toString() ?? "2021",
+                  description.text ?? " ",
+                  logo ?? " ",
+                  AuthService().getCurrentUserUID(),
+                );
               },
               child: Container(
                 height: 60,
@@ -211,40 +177,9 @@ class _EducationState extends State<Education> {
                 ),
               ),
             ),
-
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   itemCount: _placesList.length,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     return Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: GestureDetector(
-            //         onTap: () {
-            //           setState(() {
-            //             _name.text = _placesList[index]["name"].toString();
-            //           });
-            //         },
-            //         child: Text(
-            //           _placesList[index]["name"].toString(),
-            //           style: const TextStyle(
-            //             color: Colors.white,
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
           ],
         ),
       ),
     );
   }
 }
-
-//School/University ..
-//Name ..
-//Field
-//Start Date
-//End Date
-//Description
-//Years

@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
@@ -20,25 +18,6 @@ class UtilsService {
       returnURL = fileURL;
     });
     return returnURL;
-  }
-
-  Future<String> uploadAudioFile(File _audio, String path) async {
-    try {
-      final firebase_storage.Reference storageReference =
-          firebase_storage.FirebaseStorage.instance.ref(path);
-
-      final firebase_storage.UploadTask uploadTask =
-          storageReference.putFile(_audio);
-
-      await uploadTask.whenComplete(() => null);
-      String returnURL = '';
-      await storageReference.getDownloadURL().then((fileURL) {
-        returnURL = fileURL;
-      });
-      return returnURL;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 
   Future<File> urlToFile(String imageUrl) async {

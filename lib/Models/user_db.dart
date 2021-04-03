@@ -6,7 +6,6 @@ class UserModel {
   String uid;
   String profileImage;
   String ref_link;
-  String audioLink;
   String bio;
   UserModel({
     this.bio,
@@ -15,7 +14,6 @@ class UserModel {
     this.uid,
     this.profileImage,
     this.ref_link,
-    this.audioLink,
   });
 
   UserModel.fromMap(Map<String, dynamic> map)
@@ -24,7 +22,6 @@ class UserModel {
         uid = map['uid'].toString() ?? '',
         profileImage = map['profileImage'].toString() ?? '',
         ref_link = map['ref_link'].toString() ?? '',
-        audioLink = map['audioLink'].toString() ?? '',
         bio = map['bio'].toString();
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot)

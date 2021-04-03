@@ -48,13 +48,13 @@ dependencies:
   path_provider:
   url_launcher: ^6.0.2
   flutter_share_me: ^0.9.1
-  record: ^2.1.0+1
-  audioplayer: ^0.8.1
   intl: ^0.17.0
   extended_image: ^4.0.0
   fluentui_icons: ^0.2.0
   flutter_chip_tags: ^1.0.4
   dio: ^4.0.0
+  flutter_typeahead: ^3.1.1
+  animations: ^2.0.0
 
 dev_dependencies:
   flutter_test:
