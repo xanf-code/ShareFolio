@@ -52,9 +52,7 @@ class SliverBar extends StatelessWidget {
               FluentSystemIcons.ic_fluent_channel_notifications_regular,
               color: Colors.white,
             ),
-            onPressed: () {
-              debugPrint("TAPPED");
-            },
+            onPressed: () {},
           ),
         ],
       ),

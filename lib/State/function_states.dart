@@ -173,12 +173,7 @@ class FirebaseFunctions extends ChangeNotifier {
             .createEducation(context, type, Name, Field, StartDate, EndDate,
                 Description, imageLogo, userID)
             .whenComplete(() async {
-          await FirebaseFirestore.instance
-              .collection("users")
-              .doc(_authService.getCurrentUserUID())
-              .update({
-            "data.education": true,
-          });
+          afterFunction();
           Get.back();
         });
       }
@@ -191,5 +186,14 @@ class FirebaseFunctions extends ChangeNotifier {
       );
     }
     notifyListeners();
+  }
+
+  Future<void> afterFunction() async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(_authService.getCurrentUserUID())
+        .update({
+      "data.education": true,
+    });
   }
 }

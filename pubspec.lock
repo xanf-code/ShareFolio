@@ -237,13 +237,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_chip_tags:
-    dependency: "direct main"
-    description:
-      name: flutter_chip_tags
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   flutter_feather_icons:
     dependency: "direct main"
     description:

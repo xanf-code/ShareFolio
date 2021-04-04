@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,6 @@ class FirebaseService {
           "education": false,
           "skills": false,
           "certificate": false,
-          "publications": false,
           "achievements": false,
         },
       });
@@ -96,20 +96,13 @@ class FirebaseService {
         .collection("users")
         .doc(userID)
         .collection("shareFolio")
-        .doc('details')
+        .doc('about')
         .set({
-      "about": {
-        "name": name,
-        "type": type,
-        "bio": bio,
-        "location": location,
-        "userID": userID,
-      },
-      "skills": [],
-      "education": [],
-      "certificate": [],
-      "achievements": [],
-      "publications": [],
+      "name": name,
+      "type": type,
+      "bio": bio,
+      "location": location,
+      "userID": userID,
     });
   }
 
@@ -119,13 +112,14 @@ class FirebaseService {
         .collection("users")
         .doc(userID)
         .collection("shareFolio")
-        .doc('details')
-        .update({
+        .doc('skills')
+        .set({
       "skills": FieldValue.arrayUnion(skills),
     });
   }
 
   //CREATE USER SHAREFOLIO-EDUCATION
+  String docID = Uuid().v4();
   Future createEducation(
       BuildContext context,
       String type,
@@ -140,19 +134,20 @@ class FirebaseService {
         .collection("users")
         .doc(userID)
         .collection("shareFolio")
-        .doc('details')
-        .update({
-      "education": FieldValue.arrayUnion([
-        {
-          "Type": type,
-          "Name": Name,
-          "Field": Field,
-          "Start Date": StartDate,
-          "End Date": EndDate,
-          "Description": Description,
-          "Logo": imageLogo,
-        },
-      ])
+        .doc('education')
+        .collection("list")
+        .doc(docID)
+        .set({
+      "DocID": docID,
+      "Type": type,
+      "Name": Name,
+      "Field": Field,
+      "Start Date": StartDate,
+      "End Date": EndDate,
+      "Description": Description,
+      "Logo": imageLogo,
+    }).whenComplete(() {
+      docID = Uuid().v4();
     });
   }
 }

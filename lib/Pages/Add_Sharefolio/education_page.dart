@@ -1,12 +1,14 @@
+import 'package:fluentui_icons/fluentui_icons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/dropdown_suggestion.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/edu_dropdown.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/education_level_1.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/education_name.dart';
+import 'package:my_app/Pages/Add_Sharefolio/widgets/next_button.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
-import 'package:my_app/Services/API/suggestion.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/constants.dart';
@@ -22,30 +24,10 @@ class _EducationState extends State<Education> {
   String logo;
   String startDate;
   String endDate;
-  final APIServices _apiServices = APIServices();
   final TextEditingController description = TextEditingController();
   final TextEditingController _name = TextEditingController();
   final TextEditingController _field = TextEditingController();
   final List _placeList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _name.addListener(_onSearchChanged);
-  }
-
-  @override
-  void dispose() {
-    _name.removeListener(_onSearchChanged);
-    _name.dispose();
-    super.dispose();
-  }
-
-  // ignore: always_declare_return_types
-  _onSearchChanged() {
-    _apiServices.getLocationResults(_name.text, _placeList, "CollegeTag");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,20 +145,8 @@ class _EducationState extends State<Education> {
                   AuthService().getCurrentUserUID(),
                 );
               },
-              child: Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                color: primary,
-                child: Center(
-                  child: Text(
-                    "Next Step",
-                    style: GoogleFonts.dmSans(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              child: const NextButton(
+                text: "Next Step",
               ),
             ),
           ],

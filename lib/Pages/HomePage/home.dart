@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/HomePage/MainHome/home_page.dart';
-import 'package:my_app/Pages/HomePage/SearchPage/search.dart';
 import 'package:my_app/Pages/HomePage/Settings/settings.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/animated_indexed_stack.dart';
 import 'package:my_app/Widget/constants.dart';
 import 'package:provider/provider.dart';
+
+import 'SearchPage/search.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
