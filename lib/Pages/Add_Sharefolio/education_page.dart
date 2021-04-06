@@ -1,8 +1,6 @@
-import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/dropdown_suggestion.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/edu_dropdown.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/education_level_1.dart';
@@ -28,6 +26,8 @@ class _EducationState extends State<Education> {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _field = TextEditingController();
   final List _placeList = [];
+  bool _uploading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +132,9 @@ class _EducationState extends State<Education> {
             GestureDetector(
               onTap: () {
                 HapticFeedback.lightImpact();
+                setState(() {
+                  _uploading = true;
+                });
                 Provider.of<FirebaseFunctions>(context, listen: false)
                     .createEducation(
                   context,
@@ -143,10 +146,16 @@ class _EducationState extends State<Education> {
                   description.text ?? " ",
                   logo ?? " ",
                   AuthService().getCurrentUserUID(),
-                );
+                )
+                    .whenComplete(() {
+                  setState(() {
+                    _uploading = false;
+                  });
+                });
               },
-              child: const NextButton(
+              child: NextButton(
                 text: "Next Step",
+                uploading: _uploading,
               ),
             ),
           ],

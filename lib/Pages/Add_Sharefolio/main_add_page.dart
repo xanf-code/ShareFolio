@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_app/Pages/Add_Sharefolio/add_page.dart';
+import 'package:my_app/Pages/Add_Sharefolio/add_about_page.dart';
 import 'package:my_app/Pages/Add_Sharefolio/skills_page.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';

@@ -4,9 +4,11 @@ import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart
 
 class NextButton extends StatelessWidget {
   final String text;
+  final bool uploading;
   const NextButton({
     Key key,
     this.text,
+    this.uploading,
   }) : super(key: key);
 
   @override
@@ -16,14 +18,20 @@ class NextButton extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       color: primary,
       child: Center(
-        child: Text(
-          text,
-          style: GoogleFonts.dmSans(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: uploading == true
+            ? const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              )
+            : Text(
+                text,
+                style: GoogleFonts.dmSans(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
       ),
     );
   }

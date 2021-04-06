@@ -9,6 +9,7 @@ import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/Backend_calls/all_calls.dart';
 import 'package:my_app/Services/utils/upload_utils.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class FirebaseService {
@@ -30,13 +31,6 @@ class FirebaseService {
         'profileImage': photoURL ?? " ",
         "ref_link": " ",
         "bio": " ",
-        // "data": {
-        //   "about": false,
-        //   "education": false,
-        //   "skills": false,
-        //   "certificate": false,
-        //   "achievements": false,
-        // },
       });
       await _backendCalls.sendUserData(uid, name, email);
     }

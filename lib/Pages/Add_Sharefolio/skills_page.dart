@@ -19,6 +19,7 @@ class _SkillsPageState extends State<SkillsPage> {
   List<String> skills = [];
   final TextEditingController skill = TextEditingController();
   String logo;
+  bool _uploading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +34,7 @@ class _SkillsPageState extends State<SkillsPage> {
               padding: const EdgeInsets.only(top: 20.0),
               child: ListView(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Row(
                     children: [
@@ -121,15 +123,24 @@ class _SkillsPageState extends State<SkillsPage> {
             GestureDetector(
               onTap: () {
                 HapticFeedback.lightImpact();
+                setState(() {
+                  _uploading = true;
+                });
                 Provider.of<FirebaseFunctions>(context, listen: false)
                     .createSkills(
                   context,
                   skills,
                   AuthService().getCurrentUserUID(),
-                );
+                )
+                    .whenComplete(() {
+                  setState(() {
+                    _uploading = false;
+                  });
+                });
               },
-              child: const NextButton(
+              child: NextButton(
                 text: "Next Step",
+                uploading: _uploading,
               ),
             ),
           ],

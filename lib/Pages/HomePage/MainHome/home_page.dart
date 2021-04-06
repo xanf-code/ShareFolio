@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/Add_Sharefolio/main_add_page.dart';
 import 'package:my_app/Pages/HomePage/MainHome/widgets/sliver_app_bar.dart';
-import 'package:my_app/Pages/ShareFolio_CRUD/Read/display_education.dart';
+import 'package:my_app/Pages/demo.dart';
 import 'package:my_app/State/function_states.dart';
 import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:provider/provider.dart';
@@ -91,19 +91,28 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2.5,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: primary,
+                              GestureDetector(
+                                //REMOVE LATER
+                                onTap: () {
+                                  Get.to(
+                                    () => Demo(),
+                                  );
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: primary,
+                                    ),
                                   ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "CARDS",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
+                                  child: Center(
+                                    child: Text(
+                                      "CARDS",
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),

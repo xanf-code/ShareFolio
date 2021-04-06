@@ -2,6 +2,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/Pages/Add_Sharefolio/widgets/next_button.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/function_states.dart';
@@ -24,6 +25,7 @@ class _TypeContainerState extends State<TypeContainer> {
   String location;
   String logo;
   final List _location = [];
+  bool _uploading = false;
 
   List name = [
     {
@@ -199,6 +201,9 @@ class _TypeContainerState extends State<TypeContainer> {
         GestureDetector(
           onTap: () {
             HapticFeedback.lightImpact();
+            setState(() {
+              _uploading = true;
+            });
             Provider.of<FirebaseFunctions>(context, listen: false)
                 .createAboutShareFolio(
               context,
@@ -207,22 +212,16 @@ class _TypeContainerState extends State<TypeContainer> {
               bioController.text,
               locationController.text,
               AuthService().getCurrentUserUID(),
-            );
+            )
+                .whenComplete(() {
+              setState(() {
+                _uploading = false;
+              });
+            });
           },
-          child: Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width,
-            color: primary,
-            child: Center(
-              child: Text(
-                "Next Step",
-                style: GoogleFonts.dmSans(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+          child: NextButton(
+            text: "Next Step",
+            uploading: _uploading,
           ),
         ),
       ],
