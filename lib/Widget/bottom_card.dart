@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:my_app/Widget/share_button.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';

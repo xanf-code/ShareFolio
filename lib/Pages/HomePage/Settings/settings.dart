@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Pages/HomePage/Settings/levels/settings_widget_main.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

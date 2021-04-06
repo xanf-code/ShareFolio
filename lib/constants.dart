@@ -78,3 +78,6 @@ List<String> years = [
   "2027",
   "2028",
 ];
+
+//RegisterUserPath
+const String registerUserPath = 'http://192.168.0.8:5000/user/register';

@@ -9,7 +9,7 @@ import 'package:my_app/Pages/Add_Sharefolio/main_add_page.dart';
 import 'package:my_app/Pages/HomePage/MainHome/widgets/sliver_app_bar.dart';
 import 'package:my_app/Pages/ShareFolio_CRUD/Read/display_education.dart';
 import 'package:my_app/State/function_states.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:provider/provider.dart';
 import 'MainPage_columns/popular_categories.dart';
 import 'MainPage_columns/ranked_sharefolios.dart';
@@ -91,27 +91,19 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(
-                                    () => DisplayEducation(),
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: primary,
-                                    ),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2.5,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: primary,
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      "CARDS",
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                      ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "CARDS",
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),

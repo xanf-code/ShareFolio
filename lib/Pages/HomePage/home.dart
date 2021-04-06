@@ -7,7 +7,7 @@ import 'package:my_app/Pages/HomePage/MainHome/home_page.dart';
 import 'package:my_app/Pages/HomePage/Settings/settings.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:my_app/Widget/animated_indexed_stack.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:provider/provider.dart';
 
 import 'SearchPage/search.dart';

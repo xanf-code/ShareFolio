@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 
 class NextButton extends StatelessWidget {
   final String text;

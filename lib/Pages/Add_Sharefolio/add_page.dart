@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/Pages/Add_Sharefolio/widgets/ind_business_widget.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 
 class ProfileShareFolio extends StatefulWidget {
   @override

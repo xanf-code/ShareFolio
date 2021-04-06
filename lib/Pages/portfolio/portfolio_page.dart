@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/Pages/Error_page/dynamic_no_exits_error.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 
 class ShareFolioPage extends StatefulWidget {
   final String uid;

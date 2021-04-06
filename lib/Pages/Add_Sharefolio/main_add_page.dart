@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_app/Pages/Add_Sharefolio/add_page.dart';
 import 'package:my_app/Pages/Add_Sharefolio/skills_page.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 
 import 'education_page.dart';
 

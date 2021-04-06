@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/State/function_states.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:provider/provider.dart';
 import 'dropdown_suggestion.dart';
 import 'education_name.dart';

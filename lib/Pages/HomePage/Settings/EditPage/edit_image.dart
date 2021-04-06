@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/firebase_services/services.dart';
 import 'package:my_app/Services/utils/upload_utils.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:my_app/Pages/AuthPage/Login/Widget/form_ui.dart';
-import 'package:my_app/Widget/constants.dart';
+import 'file:///C:/Users/darshan/AndroidStudioProjects/my_app/lib/constants.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
