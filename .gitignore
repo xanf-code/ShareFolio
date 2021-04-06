@@ -46,4 +46,15 @@ app.*.map.json
 /android/app/release
 
 # Dart Files
-/lib/constants.dart
+*/lib/constants.dart
+*google-services.json
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
