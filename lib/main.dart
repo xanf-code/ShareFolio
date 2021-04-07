@@ -6,6 +6,7 @@ import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/Onbarding/onboarding.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/Services/Backend_calls/all_calls.dart';
+import 'package:my_app/State/BackendProvider/backend_provider.dart';
 import 'package:my_app/State/authentication.dart';
 import 'package:my_app/State/function_states.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,9 @@ class _MyAppState extends State<MyApp> {
         ),
         Provider<FirebaseFunctions>(
           create: (_) => FirebaseFunctions(),
+        ),
+        Provider<BackendProvider>(
+          create: (_) => BackendProvider(),
         ),
       ],
       child: StreamProvider<UserModel>.value(

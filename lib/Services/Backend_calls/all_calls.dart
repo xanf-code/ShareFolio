@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:my_app/Models/user_about_sharefolio.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 import 'package:my_app/constants.dart';
-import "package:http/http.dart" as http;
 
 class BackendCalls {
   final AuthService _authService = AuthService();
@@ -136,21 +132,5 @@ class BackendCalls {
       debugPrint(e.toString());
     }
     return "success";
-  }
-
-  Future<UserDataModel> getUserData() async {
-    try {
-      final http.Response response = await http.get(
-        Uri.parse(
-            "https://sharefoliodevapi.herokuapp.com/sharefolio/${_authService.getCurrentUserUID()}"),
-      );
-      if (response.statusCode == 200) {
-        return UserDataModel.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>,
-        );
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 }

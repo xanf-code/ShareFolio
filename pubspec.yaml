@@ -53,7 +53,6 @@ dependencies:
   fluentui_icons: ^0.2.0
   dio: ^4.0.0
   flutter_typeahead: ^3.1.1
-  flutter_svg: ^0.19.3
 
 dev_dependencies:
   flutter_test:
