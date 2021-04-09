@@ -7,6 +7,7 @@ import 'package:my_app/Models/CardsModel/cards_model.dart';
 import 'package:my_app/Models/EducationModel/education_model.dart';
 import 'package:my_app/Models/SkillsModel/skills_model.dart';
 import 'package:my_app/Models/UserAboutModel/about_model.dart';
+import 'package:my_app/Services/API/suggestion.dart';
 import 'package:my_app/Services/Authentication_service/auth_service.dart';
 
 class BackendProvider extends ChangeNotifier {
