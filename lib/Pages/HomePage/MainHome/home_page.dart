@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/Models/user_db.dart';
 import 'package:my_app/Pages/Add_Sharefolio/main_add_page.dart';
+import 'package:my_app/Pages/Cards_Page/add_cards.dart';
 import 'package:my_app/Pages/HomePage/MainHome/widgets/sliver_app_bar.dart';
 import 'package:my_app/Pages/demo.dart';
 import 'package:my_app/State/function_states.dart';
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                                 //REMOVE LATER
                                 onTap: () {
                                   Get.to(
-                                    () => Demo(),
+                                    () => AddCards(),
                                   );
                                 },
                                 child: Container(
